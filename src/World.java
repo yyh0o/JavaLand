@@ -1,6 +1,6 @@
 public class World {
     private Map[] maps;
-    private Life[] lives;
+    private Biological[] lives;
     private Item[] items;
 }
 

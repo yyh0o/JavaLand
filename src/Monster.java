@@ -1,2 +1,2 @@
-public class Monster extends Life {
+public class Monster extends Biological {
 }
