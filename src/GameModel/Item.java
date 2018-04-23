@@ -1,2 +1,3 @@
-package GameModel;public class Item {
+package GameModel;
+public class Item extends Base {
 }

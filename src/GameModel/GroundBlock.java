@@ -1,2 +1,3 @@
-package GameModel;public class GroundBlock {
+package GameModel;
+public class GroundBlock extends Base {
 }
