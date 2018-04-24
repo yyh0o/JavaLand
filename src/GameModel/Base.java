@@ -1,7 +1,5 @@
 package GameModel;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
-
 public class Base {
     private double px;//图片截取点的坐标
     private double py;
@@ -20,7 +18,7 @@ public class Base {
         y = initY;
         isVisible = initIsVisible;
     }
-    public Base(){
+    Base(){
         px = 0;
         py = 0;
         width = 0;
@@ -53,6 +51,7 @@ public class Base {
     public double getY() {
         return y;
     }
+
     public boolean getIsVisible(){
         return isVisible;
     }
