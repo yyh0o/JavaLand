@@ -11,5 +11,3 @@
   游戏结局，或许会设置一个简单的结局，在游戏一开始玩家就能知道最终的任务，《塞尔达传说：荒野之息（The Legend of Zelda: Breath of the Wild）》中主角林克一开始就被告知最终的任务是要去城堡拯救公主塞尔达
 
 add line
-add line 2
-
