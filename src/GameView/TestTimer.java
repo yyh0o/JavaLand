@@ -17,19 +17,21 @@ import java.util.ArrayList;
 public class TestTimer extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Group root = new Group();
-        Scene scene = new Scene(root);
-        Canvas canvas = new Canvas(1200,800);
-        root.getChildren().add(canvas);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        primaryStage.setTitle("TestTimer");
-        primaryStage.setScene(scene);
+        Group root = new Group(); //新建根节点
+        Scene scene = new Scene(root);//在根节点新建一个场景
+        Canvas canvas = new Canvas(1200,800);//新建画布
+        root.getChildren().add(canvas);//添加画布到场景
+        GraphicsContext gc = canvas.getGraphicsContext2D();//获得画布的graphicContext
+        primaryStage.setTitle("TestTimer");//设置title
+//        scene.setCursor(new ImageCursor(new Image("/resource/草2.png")));
+        primaryStage.setScene(scene);//添加场景到舞台
 
-        Role testRole = new Role();
-        Ground ground = new Ground();
+        Role testRole = new Role();//新建角色
+        Ground ground = new Ground();//新建地
 
-        ArrayList<String> input = new ArrayList<String>();
+        ArrayList<String> input = new ArrayList<String>();//新建储存KeyCode的链表
 
+        //添加键盘按键KeyCode到按键列表
         scene.setOnKeyPressed(
                 new EventHandler<KeyEvent>() {
                     @Override
@@ -42,6 +44,7 @@ public class TestTimer extends Application {
                 }
         );
 
+        //移除键盘按键KeyCode到按键列表
         scene.setOnKeyReleased(
                 new EventHandler<KeyEvent>() {
                     @Override
@@ -51,7 +54,7 @@ public class TestTimer extends Application {
                     }
                 }
         );
-
+        //新建时钟
         final long startNanoTime = System.nanoTime();
         new AnimationTimer(){
 
@@ -66,14 +69,19 @@ public class TestTimer extends Application {
                     testRole.move("DOWN");
                 if (input.contains("LEFT") || input.contains("A"))
                     testRole.move("LEFT");
-                if (input.contains("RIGHT") || input.contains("D"))
+                if (input.contains("RIGHT") || input.contains("D")){
+                    gc.translate(-1,0);
                     testRole.move("RIGHT");
+                }
+
                 ground.drawGroud(gc,32,32);
                 testRole.drawRole(gc);
 
 
             }
-        }.start();
+        }.start(); //开始
+        primaryStage.sizeToScene(); //设置舞台大小和场景一致
+        primaryStage.setResizable(false); //设置窗口不可缩放
         primaryStage.show();
     }
 }
