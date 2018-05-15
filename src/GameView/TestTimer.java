@@ -63,6 +63,8 @@ public class TestTimer extends Application {
                 double t = (now - startNanoTime) / 1000000000.0;
 //                testRole.move("DOWN");
 //                testRole.move("RIGHT");
+
+                //判断用户输入并且处理 之后会放在controller中
                 if (input.contains("UP") || input.contains("W"))
                     testRole.move("UP");
                 if (input.contains("DOWN") || input.contains("S"))
@@ -74,9 +76,8 @@ public class TestTimer extends Application {
                     testRole.move("RIGHT");
                 }
 
-                ground.drawGroud(gc,32,32);
-                testRole.drawRole(gc);
-
+                ground.drawGroud(gc,32,32); //画地图
+                testRole.drawRole(gc); //画角色
 
             }
         }.start(); //开始
