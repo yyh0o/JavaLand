@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -73,6 +74,7 @@ public class TestTimer extends Application {
                     testRole.move("LEFT");
                 if (input.contains("RIGHT") || input.contains("D")){
                     gc.translate(-1,0);
+                    System.out.println(gc.getTransform().getTx()); //获取改变后的Tx坐标值
                     testRole.move("RIGHT");
                 }
 
