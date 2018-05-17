@@ -9,19 +9,22 @@ public class Role extends Biological {
     public void move(String toward){
         if (toward.equals("UP")){
 //            this.setImage(new Image(""));
-            this.setY(this.getY() - speed);
+            setPosition(getPosition().add(0,-speed));
         }
         if (toward.equals("DOWN")){
             this.setImage(new Image("resource/Role1.png"));
-            this.setY(this.getY() + speed);
+//            this.setY(this.getY() + speed);
+            setPosition(getPosition().add(0,speed));
         }
         if (toward.equals("LEFT")){
             this.setImage(new Image("resource/Role1Left.png"));
-            this.setX(this.getX() - speed);
+//            this.setX(this.getX() - speed);
+            setPosition(getPosition().add(-speed,0));
         }
         if (toward.equals("RIGHT")){
             this.setImage(new Image("resource/Role1Right.png"));
-            this.setX(this.getX() + speed);
+//            this.setX(this.getX() + speed);
+            setPosition(this.getPosition().add(speed,0));
         }
     }
     public Role(){
@@ -30,6 +33,6 @@ public class Role extends Biological {
     }
 
     public void drawRole(GraphicsContext gc){
-        gc.drawImage(getImage(),getX(),getY());
+        gc.drawImage(getImage(),getPosition().getX(),getPosition().getY());
     }
 }

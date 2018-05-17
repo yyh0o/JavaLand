@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 
 public class Ground {
     private Terrain[] terrains;
-    private GroundBlock[][] testGround = new GroundBlock[40][40];
+    private GroundBlock[][] testGround = new GroundBlock[20][30];
 
     public Ground(){
         for (int i = 0; i < testGround.length; i++){

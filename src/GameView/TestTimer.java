@@ -5,22 +5,25 @@ import GameModel.Role;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.transform.Translate;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
 public class TestTimer extends Application {
+    final int WIDTH = 800;
+    final int HEIGHT = 600;
     @Override
     public void start(Stage primaryStage) throws Exception {
         Group root = new Group(); //新建根节点
         Scene scene = new Scene(root);//在根节点新建一个场景
-        Canvas canvas = new Canvas(1200,800);//新建画布
+        Canvas canvas = new Canvas(WIDTH,HEIGHT);//新建画布
         root.getChildren().add(canvas);//添加画布到场景
         GraphicsContext gc = canvas.getGraphicsContext2D();//获得画布的graphicContext
         primaryStage.setTitle("TestTimer");//设置title
@@ -29,6 +32,8 @@ public class TestTimer extends Application {
 
         Role testRole = new Role();//新建角色
         Ground ground = new Ground();//新建地
+
+
 
         ArrayList<String> input = new ArrayList<String>();//新建储存KeyCode的链表
 
@@ -41,6 +46,16 @@ public class TestTimer extends Application {
 
                         if (!input.contains(code))
                             input.add(code);
+                    }
+                }
+        );
+        final Point2D[] mousePoint = {new Point2D(0, 0)};//记录坐标
+        scene.setOnMouseClicked(
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        Point2D t = new Point2D(event.getScreenX(),event.getScreenY());
+                        mousePoint[0] = t;
                     }
                 }
         );
@@ -64,7 +79,6 @@ public class TestTimer extends Application {
                 double t = (now - startNanoTime) / 1000000000.0;
 //                testRole.move("DOWN");
 //                testRole.move("RIGHT");
-
                 //判断用户输入并且处理 之后会放在controller中
                 if (input.contains("UP") || input.contains("W"))
                     testRole.move("UP");
@@ -74,9 +88,10 @@ public class TestTimer extends Application {
                     testRole.move("LEFT");
                 if (input.contains("RIGHT") || input.contains("D")){
                     gc.translate(-1,0);
-                    System.out.println(gc.getTransform().getTx()); //获取改变后的Tx坐标值
+//                    System.out.println(gc.getTransform().getTx()); //获取改变后的Tx坐标值
                     testRole.move("RIGHT");
                 }
+//                System.out.println(mousePoint[0]);
 
                 ground.drawGroud(gc,32,32); //画地图
                 testRole.drawRole(gc); //画角色

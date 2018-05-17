@@ -1,6 +1,7 @@
 package GameModel;
 
 
+import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 
 public class Base {
@@ -9,8 +10,9 @@ public class Base {
 //    private double py;
     private double width;//图片截取的长度和宽度
     private double height;
-    private double x;//图片在地图上绘制的位置
-    private double y;
+//    private double x;
+//    private double y;
+    private javafx.geometry.Point2D position;//图片在地图上绘制的位置
     private boolean isVisible;//是否可视
 
     protected void setImage(Image image) {
@@ -26,8 +28,9 @@ public class Base {
 //        py = initPy;
         width = initWidth;
         height = initHeight;
-        x = initX;
-        y = initY;
+        position = new Point2D(initX,initY);
+//        x = initX;
+//        y = initY;
         isVisible = initIsVisible;
     }
     Base(){
@@ -35,8 +38,7 @@ public class Base {
 //        py = 0;
         width = 0;
         height = 0;
-        x = 0;
-        y = 0;
+        position = new Point2D(0,0);
         isVisible = false;
     }
 
@@ -44,24 +46,20 @@ public class Base {
         return height;
     }
 
-//    public double getPx() {
-//        return px;
-//    }
-//
-//    public double getPy() {
-//        return py;
-//    }
+    public double getPx() {
+        return position.getX();
+    }
+
+    public double getPy() {
+        return position.getY();
+    }
 
     public double getWidth() {
         return width;
     }
 
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {
-        return y;
+    public Point2D getPosition() {
+        return position;
     }
 
     public boolean getIsVisible(){
@@ -88,11 +86,7 @@ public class Base {
         this.width = width;
     }
 
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    public void setY(double y) {
-        this.y = y;
+    public void setPosition(Point2D position) {
+        this.position = position;
     }
 }
