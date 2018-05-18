@@ -95,7 +95,7 @@ public class TestTimer extends Application {
 //                System.out.println(mousePoint[0]);
                  Text text = new Text(mousePoint[0].getX(),mousePoint[0].getY(),mousePoint[0].toString());
                 clearCanvas(gc,WIDTH,HEIGHT);
-                ground.drawGroud(gc,-gc.getTransform().getTx(),-gc.getTransform().getTy()); //画地图
+                ground.drawGroud(gc,Ground.fixPx,Ground.fixPy); //画地图
                 testRole.drawRole(gc); //画角色
 
             }
@@ -105,7 +105,7 @@ public class TestTimer extends Application {
         primaryStage.show();
     }
 
-    //清除当前画布上的内容
+    //清除当前窗口上的内容
     public void clearCanvas(GraphicsContext gc, double canvasWidth, double canvasHeight){
         gc.clearRect(-gc.getTransform().getTx(),-gc.getTransform().getTy(),canvasWidth,canvasHeight);
 
