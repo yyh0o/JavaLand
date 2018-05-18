@@ -12,13 +12,14 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
 public class TestTimer extends Application {
-    final int WIDTH = 800;
-    final int HEIGHT = 600;
+    final int WIDTH = 860;
+    final int HEIGHT = 640;
     @Override
     public void start(Stage primaryStage) throws Exception {
         Group root = new Group(); //新建根节点
@@ -50,7 +51,7 @@ public class TestTimer extends Application {
                 }
         );
         final Point2D[] mousePoint = {new Point2D(0, 0)};//记录坐标
-        scene.setOnMouseClicked(
+        scene.setOnMouseMoved(
                 new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
@@ -92,8 +93,9 @@ public class TestTimer extends Application {
                     testRole.move("RIGHT");
                 }
 //                System.out.println(mousePoint[0]);
-
-                ground.drawGroud(gc,32,32); //画地图
+                 Text text = new Text(mousePoint[0].getX(),mousePoint[0].getY(),mousePoint[0].toString());
+                clearCanvas(gc,WIDTH,HEIGHT);
+                ground.drawGroud(gc,-gc.getTransform().getTx(),-gc.getTransform().getTy()); //画地图
                 testRole.drawRole(gc); //画角色
 
             }
@@ -101,5 +103,11 @@ public class TestTimer extends Application {
         primaryStage.sizeToScene(); //设置舞台大小和场景一致
         primaryStage.setResizable(false); //设置窗口不可缩放
         primaryStage.show();
+    }
+
+    //清除当前画布上的内容
+    public void clearCanvas(GraphicsContext gc, double canvasWidth, double canvasHeight){
+        gc.clearRect(-gc.getTransform().getTx(),-gc.getTransform().getTy(),canvasWidth,canvasHeight);
+
     }
 }
