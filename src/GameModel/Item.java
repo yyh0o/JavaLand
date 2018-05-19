@@ -1,3 +1,3 @@
 package GameModel;
-public class Item extends Base {
+public abstract class Item extends Base {
 }

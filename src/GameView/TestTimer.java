@@ -99,7 +99,7 @@ public class TestTimer extends Application {
                 GroundController.updateGround( ground,gc,testRole);
                 clearCanvas(gc,WIDTH,HEIGHT);
                 ground.drawGroud(gc); //画地图
-                testRole.drawRole(gc); //画角色
+                testRole.draw(gc); //画角色
 
             }
         }.start(); //开始

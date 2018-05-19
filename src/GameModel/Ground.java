@@ -4,8 +4,8 @@ import javafx.scene.canvas.GraphicsContext;
 public class Ground {
     final int smallRow = 22;
     final int smallCol = 30;
-    final int bigRow = 200;
-    final int bigCol = 300;
+    final int bigRow = 400;
+    final int bigCol = 600;
     private Terrain[] terrains;
     private GroundBlock[][] bigGround;
     private int row;//记录显示部分从哪一行开始
@@ -14,6 +14,7 @@ public class Ground {
 
     public int getUpdateSize() {
         return updateSize;
+
     }
 
     public int getCol() {
@@ -55,7 +56,7 @@ public class Ground {
     public void drawGroud(GraphicsContext gc){
         for (int i = -2; i < smallCol; i++){
             for (int j = -2; j < smallRow; j++){
-                bigGround[j+row][i+col].drawSelf(gc);
+                bigGround[j+row][i+col].draw(gc);
             }
         }
 

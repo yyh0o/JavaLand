@@ -1,5 +1,8 @@
 package GameModel;
-public class Biological extends Base {
+
+import javafx.scene.canvas.GraphicsContext;
+
+public abstract class Biological extends Base {
     protected double speed;
 
     public double getSpeed(){
@@ -9,4 +12,5 @@ public class Biological extends Base {
         super(x,y);
     }
     Biological(){}
+
 }
