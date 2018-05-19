@@ -2,74 +2,63 @@ package GameModel;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Ground {
+    final int smallRow = 22;
+    final int smallCol = 30;
+    final int bigRow = 200;
+    final int bigCol = 300;
     private Terrain[] terrains;
-    private GroundBlock[][] bigGround = new GroundBlock[400][600];
-    private GroundBlock[][] smallGround = new GroundBlock[20][30]; //储存当前要绘制的部分地图
-    private int row;
-    private int col;
-    final int updateSize = 4;
-    public static double fixPx = 0;
-    public static double fixPy = 0;
+    private GroundBlock[][] bigGround;
+    private int row;//记录显示部分从哪一行开始
+    private int col;//记录显示部分从哪一列开始
+    final int updateSize = 2;//每次更新多少行列的小数组
+
+    public int getUpdateSize() {
+        return updateSize;
+    }
+
+    public int getCol() {
+        return col;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
     //初始化构建一个全是草的地图
     public Ground(){
-        for (int i = 0; i < smallGround.length; i++){
-            for (int j = 0; j < smallGround[0].length; j++){
-                smallGround[i][j] = new GrassBlock();
+        bigGround = new GroundBlock[bigCol][bigRow];
+        for (int i = 0; i < bigCol; i++){
+            for (int j = 0; j < bigRow; j++){
+                bigGround[i][j] = new GrassBlock(j*32, i*32);
             }
         }
-        row = 190;
-        col = 270;
+        row = (bigRow - smallRow)/2;
+        col = (bigCol - smallCol)/2;
     }
 
-    public void updateSmallGround(GroundBlock[][] smallGround, GroundBlock[][] bigGround, String toward){
-        if (toward.equals("UP")){
+    public void updateSmallGround(String toward){
+        if (toward.equals("UP") && row > 2){
             row -= updateSize;
-            fixPy -= updateSize*smallGround[0][0].getWidth();
         }
-        if (toward.equals("DOWN")){
+        if (toward.equals("DOWN") && row < bigRow - smallRow -2){
             row += updateSize;
-            fixPy += updateSize*smallGround[0][0].getWidth();
         }
-        if (toward.equals("LEFT")){
+        if (toward.equals("LEFT") && col > 2){
             col -= updateSize;
-            fixPx -= updateSize*smallGround[0][0].getHeight();
         }
-        if (toward.equals("RIGHT")){
+        if (toward.equals("RIGHT") && col < bigCol -smallCol -2){
             col += updateSize;
-            fixPx -= updateSize*smallGround[0][0].getHeight();
-        }
-
-        int height = smallGround.length;
-        int width = smallGround[0].length;
-        for (int i = 0; i < height; i++){
-            for (int j = 0; j < width; j++){
-                smallGround[i][j] = bigGround[i + row][j + col];
-            }
         }
     }
 
-    //绘制出当前testGround中储存的部分地图
-    public void drawGroud(GraphicsContext gc, double x, double y){
-        double width = smallGround[0][0].getWidth();
-        double height = smallGround[0][0].getHeight();
-        for (int i = 0; i < smallGround.length; i++){
-            for (int j = 0; j < smallGround[0].length; j++){
-                gc.drawImage(smallGround[i][j].getImage(),x + width*j,y + height*i);
+    //绘制出当前画布中的部分地图
+    public void drawGroud(GraphicsContext gc){
+        for (int i = -2; i < smallCol; i++){
+            for (int j = -2; j < smallRow; j++){
+                bigGround[j+row][i+col].drawSelf(gc);
             }
         }
 
-//    private GroundBlock[][] getTestGround() {
-//        return testGround;
-//    }
-
-        //    public void drawGroud(GraphicsContext gc, double pictWidth, double pictHeight){
-//        for (int i = 0; i < getTestGround().length; i++) {
-//            for (int j = 0; j < getTestGround()[0].length; j++) {
-//                Image image = getTestGround()[i][j].getImage();
-//                gc.drawImage(image,pictWidth*j,pictHeight*i);
-//            }
-//        }
-//    }
     }
 
 

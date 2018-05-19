@@ -25,7 +25,7 @@ public class TestGround extends Application {
 
         primaryStage.setScene(scene);
         Ground ground = new Ground();
-        ground.drawGroud(gc,32,32);
+        ground.drawGroud(gc);
 
         primaryStage.show();
     }

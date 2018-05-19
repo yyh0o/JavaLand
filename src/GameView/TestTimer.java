@@ -1,5 +1,6 @@
 package GameView;
 
+import GameController.GroundController;
 import GameModel.Ground;
 import GameModel.Role;
 import javafx.animation.AnimationTimer;
@@ -30,9 +31,10 @@ public class TestTimer extends Application {
         primaryStage.setTitle("TestTimer");//设置title
 //        scene.setCursor(new ImageCursor(new Image("/resource/草2.png")));
         primaryStage.setScene(scene);//添加场景到舞台
-
-        Role testRole = new Role();//新建角色
         Ground ground = new Ground();//新建地
+        gc.translate(-ground.getCol()*32,-ground.getRow()*32);
+        Role testRole = new Role(gc.getCanvas().getWidth()/2 - gc.getTransform().getTx(),
+                gc.getCanvas().getHeight()/2 - gc.getTransform().getTy());//新建角色
 
 
 
@@ -88,14 +90,15 @@ public class TestTimer extends Application {
                 if (input.contains("LEFT") || input.contains("A"))
                     testRole.move("LEFT");
                 if (input.contains("RIGHT") || input.contains("D")){
-                    gc.translate(-1,0);
+//                    gc.translate(-1,0);
 //                    System.out.println(gc.getTransform().getTx()); //获取改变后的Tx坐标值
                     testRole.move("RIGHT");
                 }
 //                System.out.println(mousePoint[0]);
                  Text text = new Text(mousePoint[0].getX(),mousePoint[0].getY(),mousePoint[0].toString());
+                GroundController.updateGround( ground,gc,testRole);
                 clearCanvas(gc,WIDTH,HEIGHT);
-                ground.drawGroud(gc,Ground.fixPx,Ground.fixPy); //画地图
+                ground.drawGroud(gc); //画地图
                 testRole.drawRole(gc); //画角色
 
             }
