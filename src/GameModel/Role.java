@@ -26,11 +26,14 @@ public class Role extends Biological {
             setPosition(this.getPosition().add(speed,0));
         }
         image = new Image("resource/Role1"+Rtoward+".png");
+        setWidth(image.getWidth());
+        setHeight(image.getHeight());
     }
     public Role(double x, double y){
         super(x,y);
         speed = 5;
         Rtoward = "DOWN";
+        image = new Image("resource/Role1"+Rtoward+".png");
     }
 
     public void draw(GraphicsContext gc){

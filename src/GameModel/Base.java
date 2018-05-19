@@ -6,13 +6,14 @@ import javafx.scene.Parent;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import java.util.Set;
+
 public abstract class Base extends Parent {
 //    private Image image;//对应的图片
     private javafx.geometry.Point2D position;//图片在地图上绘制的位置
 
-//    protected void setImage(Image image) {
-//        this.image = image;
-//    }
+    private double height;
+    private double width;
 
     public abstract void draw(GraphicsContext gc);
 
@@ -24,10 +25,6 @@ public abstract class Base extends Parent {
         position = new Point2D(0,0);
     }
 
-//    public double getHeight() {
-//        return image.getHeight();
-//    }
-
     public double getPx() {
         return position.getX();
     }
@@ -35,10 +32,6 @@ public abstract class Base extends Parent {
     public double getPy() {
         return position.getY();
     }
-
-//    public double getWidth() {
-//        return image.getWidth();
-//    }
 
     public Point2D getPosition() {
         return position;
@@ -48,7 +41,26 @@ public abstract class Base extends Parent {
         this.position = position;
     }
 
-//    public void drawSelf(GraphicsContext gc){
-//        gc.drawImage(image,position.getX(),position.getY());
-//    }
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
+    public void setWidth(double width) {
+        this.width = width;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public double getWidth() {
+        return width;
+    }
+
+    public boolean isCollisionWith(Base base){
+        if(getPx() + getWidth() > base.getPx() && getPx() < base.getPx() + base.getWidth() && getPy() + getHeight() > base.getPy() && getPy() < base.getPy() + base.getHeight()){
+            return true;
+        }
+        return false;
+    }
 }
