@@ -1,6 +1,7 @@
 package GameView;
 
 import GameController.GroundController;
+import GameController.MainController;
 import GameModel.Ground;
 import GameModel.Role;
 import javafx.animation.AnimationTimer;
@@ -31,6 +32,7 @@ public class TestTimer extends Application {
         primaryStage.setTitle("TestTimer");//设置title
 //        scene.setCursor(new ImageCursor(new Image("/resource/草2.png")));
         primaryStage.setScene(scene);//添加场景到舞台
+        MainController.initImageLibary();
         Ground ground = new Ground();//新建地
         gc.translate(-ground.getCol()*32,-ground.getRow()*32);
         Role testRole = new Role(gc.getCanvas().getWidth()/2 - gc.getTransform().getTx(),
