@@ -39,4 +39,6 @@ public class Role extends Biological {
     public void draw(GraphicsContext gc){
         gc.drawImage(image,getPx(),getPy());
     }
+
+
 }
