@@ -5,7 +5,6 @@ import javafx.scene.image.Image;
 
 public class GrassBlock extends GroundBlock {
 
-    @Override
     public void draw(GraphicsContext gc) {
         gc.drawImage(ImageLibray.getImage("GrassBlock"),getPx(),getPy());
     }

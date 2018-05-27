@@ -22,6 +22,9 @@ import java.util.ArrayList;
 public class TestTimer extends Application {
     final int WIDTH = 860;
     final int HEIGHT = 640;
+    String LastStep="DOWN";//之前那一步的操作时什么
+    int StepNum=0;//用来记录该走那一步
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         Group root = new Group(); //新建根节点
@@ -75,6 +78,7 @@ public class TestTimer extends Application {
                     }
                 }
         );
+        System.out.println(LastStep);
         //新建时钟
         final long startNanoTime = System.nanoTime();
         new AnimationTimer(){
@@ -85,17 +89,33 @@ public class TestTimer extends Application {
 //                testRole.move("DOWN");
 //                testRole.move("RIGHT");
                 //判断用户输入并且处理 之后会放在controller中
-                if (input.contains("UP") || input.contains("W"))
-                    testRole.move("UP");
-                if (input.contains("DOWN") || input.contains("S"))
-                    testRole.move("DOWN");
-                if (input.contains("LEFT") || input.contains("A"))
-                    testRole.move("LEFT");
+
+                if(input.toString().equals(LastStep)){
+                    StepNum=0;
+                }
+                if (input.contains("UP") || input.contains("W")) {
+                    LastStep="UP";
+                    StepNum++;
+                    testRole.move("UP", StepNum);
+                }
+                if (input.contains("DOWN") || input.contains("S")) {
+                    LastStep="DOWN";
+                    StepNum++;
+                    testRole.move("DOWN", StepNum);
+                }
+                if (input.contains("LEFT") || input.contains("A")){
+                    LastStep="LEFT";
+                    StepNum++;
+                    testRole.move("LEFT",StepNum);
+                }
                 if (input.contains("RIGHT") || input.contains("D")){
+                    LastStep="RIGHT";
+                    StepNum++;
 //                    gc.translate(-1,0);
 //                    System.out.println(gc.getTransform().getTx()); //获取改变后的Tx坐标值
-                    testRole.move("RIGHT");
+                    testRole.move("RIGHT",StepNum);
                 }
+
 //                System.out.println(mousePoint[0]);
                  Text text = new Text(mousePoint[0].getX(),mousePoint[0].getY(),mousePoint[0].toString());
                 GroundController.updateGround( ground,gc,testRole);

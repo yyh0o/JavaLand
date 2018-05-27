@@ -1,24 +1,21 @@
 package GameView;
 import javafx.application.Application;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
+import javafx.event.ActionEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import java.awt.event.ActionEvent;
+import java.util.concurrent.Callable;
 
 
 public class Menu extends Application {
 
-    private static void handle(javafx.event.ActionEvent e) {
-    }
+    //private static void handle(javafx.event.ActionEvent e) {
+    //}
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -26,26 +23,38 @@ public class Menu extends Application {
         ImageView Background = new ImageView();
         Image back = new Image("resource/startBackground.png");
         Background.setImage(back);
-        ImageView start1 =new ImageView();
-        Image star2 =new Image("resource/start.png");
-        start1.setImage(star2);
-        start1.setTranslateX(10);
-        start1.setTranslateY(110);
-
+        //Image star = new Image("resource/start.png");
         //开始按钮
-        Button button = new Button();
-        button.setPrefSize(158, 38);
-        button.setTranslateX(10);
-        button.setTranslateY(110);
-        //button.setOnAction();
+        Button button1 = new Button("start");
+        button1.getStyleClass().add("button1;s_t_a_r_t");
+        button1.setStyle("-fx-font: 30 arial;");
+        //button1.setGraphic(new ImageView(star));
+        button1.setPrefSize(140, 46);
+        button1.setTranslateX(10);
+        button1.setTranslateY(110);
+        button1.setOnAction(event->{
+            new Test();
+            primaryStage.hide();
+        });
+
+        //结束按钮
+        Button button2 = new Button();
+        button2.setPrefSize(20, 20);
+        button2.setTranslateX(130);
+        button2.setTranslateY(-130);
+        button2.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                System.exit(0);
+            }
+        });
 
         // 在屏幕上显示图像
         StackPane root = new StackPane();
         root.getChildren().add(Background);
-        root.getChildren().add(button);
-        root.getChildren().add(start1);
+        root.getChildren().add(button1);
+        root.getChildren().add(button2);
         Scene scene = new Scene(root, 300, 300);
-        primaryStage.setTitle("SuperGay");
+        primaryStage.setTitle("JavaLand");
         primaryStage.setScene(scene);
         primaryStage.show();
 

@@ -1,11 +1,13 @@
 package GameModel;
 import javafx.scene.canvas.GraphicsContext;
 
+import java.util.Random;
+
 public class Ground {
     final int smallRow = 22;
     final int smallCol = 30;
-    final int bigRow = 400;
-    final int bigCol = 600;
+    final int bigRow = 200;
+    final int bigCol = 300;
     private Terrain[] terrains;
     private GroundBlock[][] bigGround;
     private int row;//记录显示部分从哪一行开始
@@ -33,9 +35,13 @@ public class Ground {
                 bigGround[i][j] = new GrassBlock(j*32, i*32);
             }
         }
+        WaterBlock drawRiver=new WaterBlock();
+        drawRiver.makeRiver(bigGround);
+
         row = (bigRow - smallRow)/2;
         col = (bigCol - smallCol)/2;
     }
+
 
     public void updateSmallGround(String toward){
         if (toward.equals("UP") && row > 2){
@@ -61,6 +67,7 @@ public class Ground {
         }
 
     }
+
 
 
 
