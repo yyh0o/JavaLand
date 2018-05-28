@@ -28,7 +28,7 @@ public class Role extends Biological {
     }
     public Role(double x, double y){
         super(x,y);
-        speed = 5;
+        speed = 1;
         Rtoward = "DOWN";
 
         image = new Image("resource/Role1"+Rtoward+"1.png");

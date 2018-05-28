@@ -90,9 +90,9 @@ public class TestTimer extends Application {
 //                testRole.move("RIGHT");
                 //判断用户输入并且处理 之后会放在controller中
 
-                if(input.toString().equals(LastStep)){
-                    StepNum=0;
-                }
+//                if(input.toString().equals(LastStep)){
+//                    StepNum=0;
+//                }
                 if (input.contains("UP") || input.contains("W")) {
                     LastStep="UP";
                     StepNum++;
