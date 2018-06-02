@@ -6,8 +6,8 @@ import java.util.Random;
 public class Ground {
     final int smallRow = 22;
     final int smallCol = 30;
-    final int bigRow = 200;
-    final int bigCol = 300;
+    final int bigRow = 900;
+    final int bigCol = 900;
     private Terrain[] terrains;
     private GroundBlock[][] bigGround;
     private int row;//记录显示部分从哪一行开始

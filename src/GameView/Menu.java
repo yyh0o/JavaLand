@@ -33,7 +33,13 @@ public class Menu extends Application {
         button1.setTranslateX(10);
         button1.setTranslateY(110);
         button1.setOnAction(event->{
-            new Test();
+//            new Test();
+            try {
+                TestTimer testTimer = new TestTimer();
+                testTimer.start(new Stage());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             primaryStage.hide();
         });
 
@@ -43,7 +49,7 @@ public class Menu extends Application {
         button2.setTranslateX(130);
         button2.setTranslateY(-130);
         button2.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
+            public void handle(ActionEvent event){
                 System.exit(0);
             }
         });
