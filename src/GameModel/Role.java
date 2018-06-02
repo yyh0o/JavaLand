@@ -11,20 +11,20 @@ public class Role extends Biological {
     public void move(String toward,int stepNum){
         Rtoward = toward;
         if (toward.equals("UP")){
-            setPosition(getPosition().add(0,-speed));
+            setPy(getPy()-speed);
         }
         if (toward.equals("DOWN")){
-            setPosition(getPosition().add(0,speed));
+            setPy(getPy()+speed);
         }
         if (toward.equals("LEFT")){
-            setPosition(getPosition().add(-speed,0));
+            setPx(getPx()-speed);
         }
         if (toward.equals("RIGHT")){
-            setPosition(this.getPosition().add(speed,0));
+            setPx(getPx()+speed);
         }
         image = new Image("resource/Role1"+toward+""+(stepNum%4+1)+".png");
-        setWidth(image.getWidth());
-        setHeight(image.getHeight());
+//        setWidth(image.getWidth());
+//        setHeight(image.getHeight());
     }
     public Role(double x, double y){
         super(x,y);

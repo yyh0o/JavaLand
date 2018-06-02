@@ -1,10 +1,8 @@
 package GameModel;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 
 public class GrassBlock extends GroundBlock {
-
     public void draw(GraphicsContext gc) {
         gc.drawImage(ImageLibray.getImage("GrassBlock"),getPx(),getPy());
     }

@@ -1,64 +1,60 @@
 package GameModel;
 
-
-import javafx.geometry.Point2D;
-import javafx.scene.Parent;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-import java.util.Set;
+public abstract class Base {
+    private static Image image;//对象图片
+    private double px;//相对x坐标
+    private double py;//相对y坐标
 
-public abstract class Base extends Parent {
-//    private Image image;//对应的图片
-    private javafx.geometry.Point2D position;//图片在地图上绘制的位置
-
-    private double height;
-    private double width;
-
-    public abstract void draw(GraphicsContext gc);
-
-    public Base(double initX, double initY){
-        position = new Point2D(initX,initY);
-    }
+//    private double height = image.getHeight();//对象高度
+//    private double width = image.getWidth();//对象宽度
 
     public Base(){
-        position = new Point2D(0,0);
+        px = 0;
+        py = 0;
+    }
+
+    //
+    public static Image getImage(){
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    public void draw(GraphicsContext gc){
+        gc.drawImage(image,getPx(),getPy());
+    };
+    public void draw(GraphicsContext gc, double fx, double fy){
+        gc.drawImage(image,getPx()+fx,getPy()+fy);
+    }
+
+    public Base(double initX, double initY){
+        px = initX;
+        py = initY;
     }
 
     public double getPx() {
-        return position.getX();
+        return px;
     }
 
     public double getPy() {
-        return position.getY();
+        return py;
     }
 
-    public Point2D getPosition() {
-        return position;
+    public void setPx(double px) {
+        this.px = px;
     }
 
-    public void setPosition(Point2D position) {
-        this.position = position;
-    }
-
-    public void setHeight(double height) {
-        this.height = height;
-    }
-
-    public void setWidth(double width) {
-        this.width = width;
-    }
-
-    public double getHeight() {
-        return height;
-    }
-
-    public double getWidth() {
-        return width;
+    public void setPy(double py) {
+        this.py = py;
     }
 
     public boolean isCollisionWith(Base base){
-        if(getPx() + getWidth() > base.getPx() && getPx() < base.getPx() + base.getWidth() && getPy() + getHeight() > base.getPy() && getPy() < base.getPy() + base.getHeight()){
+        if(getPx() + image.getWidth() > base.getPx() && getPx() < base.getPx() + image.getWidth() && getPy() + image.getHeight() > base.getPy() && getPy() < base.getPy() + image.getHeight()){
             return true;
         }
         return false;
