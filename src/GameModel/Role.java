@@ -8,8 +8,12 @@ public class Role extends Biological {
     private Body body;
     private String Rtoward;
     private Image image;
-    public void move(String toward,int stepNum){
+    public Image[] frames;
+    public double duration=0.1;
+
+    public void move(String toward,Image[] images){
         Rtoward = toward;
+        frames=images;
         if (toward.equals("UP")){
             setPy(getPy()-speed);
         }
@@ -22,21 +26,23 @@ public class Role extends Biological {
         if (toward.equals("RIGHT")){
             setPx(getPx()+speed);
         }
-        image = new Image("resource/Role1"+toward+""+(stepNum%4+1)+".png");
-//        setWidth(image.getWidth());
-//        setHeight(image.getHeight());
     }
-    public Role(double x, double y){
+    public Role(double x, double y,Image[] images){
         super(x,y);
         speed = 3;
         Rtoward = "DOWN";
-
-        image = new Image("resource/Role1"+Rtoward+"1.png");
+        frames=images;
     }
 
     public void draw(GraphicsContext gc){
         gc.drawImage(image,getPx(),getPy());
     }
+
+    public Image getFrame(double time) {
+        int index = (int) ((time % (frames.length * duration)) / duration);
+        return frames[index];
+    }
+
 
 
 }

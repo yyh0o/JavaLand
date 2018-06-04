@@ -12,6 +12,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
@@ -36,10 +37,14 @@ public class TestTimer extends Application {
 //        scene.setCursor(new ImageCursor(new Image("/resource/草2.png")));
         primaryStage.setScene(scene);//添加场景到舞台
         MainController.initImageLibary();
+        Image[] imageArrayM=new Image[4];
+        for(int i=1;i<=4;i++){
+            imageArrayM[i-1]=new Image("resource/Role1DOWN"+i+".png");
+        }
         Ground ground = new Ground();//新建地
         gc.translate(-ground.getCol()*32,-ground.getRow()*32);
         Role testRole = new Role(gc.getCanvas().getWidth()/2 - gc.getTransform().getTx(),
-                gc.getCanvas().getHeight()/2 - gc.getTransform().getTy());//新建角色
+                gc.getCanvas().getHeight()/2 - gc.getTransform().getTy(),imageArrayM);//新建角色
 
 
 
@@ -89,39 +94,55 @@ public class TestTimer extends Application {
 //                testRole.move("DOWN");
 //                testRole.move("RIGHT");
                 //判断用户输入并且处理 之后会放在controller中
-
-//                if(input.toString().equals(LastStep)){
-//                    StepNum=0;
-//                }
                 if (input.contains("UP") || input.contains("W")) {
                     LastStep="UP";
-                    StepNum++;
-                    testRole.move("UP", StepNum);
+                    for(int i=1;i<=4;i++){
+                        imageArrayM[i-1]=new Image("resource/Role1UP"+i+".png");
+                    }
+                    testRole.move("UP",imageArrayM);
+
+
                 }
-                if (input.contains("DOWN") || input.contains("S")) {
+                else if (input.contains("DOWN") || input.contains("S")) {
                     LastStep="DOWN";
-                    StepNum++;
-                    testRole.move("DOWN", StepNum);
+                    for(int i=1;i<=4;i++){
+                        imageArrayM[i-1]=new Image("resource/Role1DOWN"+i+".png");
+                    }
+                    testRole.move("DOWN",imageArrayM);
+
+
                 }
-                if (input.contains("LEFT") || input.contains("A")){
+                else if (input.contains("LEFT") || input.contains("A")){
                     LastStep="LEFT";
-                    StepNum++;
-                    testRole.move("LEFT",StepNum);
+                    for(int i=1;i<=4;i++){
+                        imageArrayM[i-1]=new Image("resource/Role1LEFT"+i+".png");
+                    }
+                    testRole.move("LEFT",imageArrayM);
+
+
                 }
-                if (input.contains("RIGHT") || input.contains("D")){
+                else if (input.contains("RIGHT") || input.contains("D")){
                     LastStep="RIGHT";
-                    StepNum++;
-//                    gc.translate(-1,0);
-//                    System.out.println(gc.getTransform().getTx()); //获取改变后的Tx坐标值
-                    testRole.move("RIGHT",StepNum);
+                    for(int i=1;i<=4;i++){
+                        imageArrayM[i-1]=new Image("resource/Role1RIGHT"+i+".png");
+                    }
+                    testRole.move("RIGHT",imageArrayM);
+
+                }
+                else{
+                    for(int i=1;i<=4;i++){
+                        imageArrayM[i-1]=new Image("resource/Role1"+LastStep+1+".png");
+                    }
+                    testRole.frames=imageArrayM;
                 }
 
+
 //                System.out.println(mousePoint[0]);
-                 Text text = new Text(mousePoint[0].getX(),mousePoint[0].getY(),mousePoint[0].toString());
+                Text text = new Text(mousePoint[0].getX(),mousePoint[0].getY(),mousePoint[0].toString());
                 GroundController.updateGround( ground,gc,testRole);
                 clearCanvas(gc,WIDTH,HEIGHT);
                 ground.drawGroud(gc); //画地图
-                testRole.draw(gc); //画角色
+                gc.drawImage(testRole.getFrame(t),testRole.getPx(),testRole.getPy()); //画角色
 
             }
         }.start(); //开始
