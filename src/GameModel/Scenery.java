@@ -1,12 +1,10 @@
 package GameModel;
 
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-
 public class Scenery extends Item {
     public String toString(){
         String s = "";
-        s += this.getClass() + "," + getPx() + "," + getPy();
+        String c = this.getClass().toString().substring(16,22);
+        s += c + ":" + getPx() + "," + getPy();
         return s;
     }
 }

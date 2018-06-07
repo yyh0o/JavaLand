@@ -17,7 +17,8 @@ public abstract class GroundBlock extends Base {
     @Override
     public String toString() {
         String s =  "";
-        s += this.getClass()+ ":" + getPx()+"."+getPx();
+        String c = this.getClass().toString().substring(16,26);
+        s += c + ":" + getPx()+","+getPy();
         return s;
     }
 }

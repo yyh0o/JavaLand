@@ -19,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class TestTimer extends Application {
@@ -39,13 +40,17 @@ public class TestTimer extends Application {
         primaryStage.setScene(scene);//添加场景到舞台
         MainController.initImageLibrary();//初始化
 
-/**测试mapBlock
+//测试mapBlock
         Long seed = Long.valueOf(1);
         String nSeed = seed + "" + 2 + 1;
         seed = Long.valueOf(nSeed);
         MainController.initImageLibrary();
-        MapBlock mpb = new MapBlock(seed);
- */
+        MapBlock mpb = new MapBlock(seed,0,0);
+        File f = new File("Dat/MapDat/"+mpb.getPx()+""+mpb.getPy()+".map");
+        f.createNewFile();
+        mpb.save(f);
+
+        MapBlock mpb1 = new MapBlock(f);
 
         Image[] imageArrayM=new Image[4];
         for(int i=1;i<=4;i++){

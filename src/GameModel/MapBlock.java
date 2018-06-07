@@ -2,7 +2,6 @@ package GameModel;
 
 
 
-import GameController.MainController;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.io.*;
@@ -20,14 +19,24 @@ public class MapBlock {
     private int px;//区块在世界的位置(x)
     private int py;//区块在世界的位置(y)
 
+    public int getPx() {
+        return px;
+    }
+
+    public int getPy() {
+        return py;
+    }
+
     public void setIsActive(boolean active){
         isActive = active;
     }
 
     //根据种子随机生成区块
 
-    public MapBlock(long seed){
-        String nSeed = seed + "" + px + py;
+    public MapBlock(long seed,int initx, int inity){
+        px = initx;
+        py = inity;
+        String nSeed = seed + "" + px + "" + py;
         Random r = new Random(Long.decode(nSeed));
         blocks = new GroundBlock[Height][Width];
         scenes = new ArrayList<>();
@@ -36,7 +45,8 @@ public class MapBlock {
                 blocks[i][j] = new GrassBlock(GrassBlock.Width()*j,GrassBlock.Height()*i);
             }
         }
-        for (int i = 0; i < 20 + r.nextInt(40); i++){
+        int slen = 20 + r.nextInt(40); //随机生成景物数量
+        for (int i = 0; i < slen; i++){
             int x = r.nextInt(3);
             switch (x){
                 case 0:
@@ -59,12 +69,12 @@ public class MapBlock {
         String s = "";
 //        s += num + "\n";
         for (Scenery k : scenes){
-            s += k.toString() + ',';
+            s += k.toString() + ' ';
         }
         s += '\n';
         for (int i = 0; i < blocks.length; i++){
             for (int j = 0; j < blocks[0].length; j++){
-                s += blocks[i][j].toString()+',';
+                s += blocks[i][j].toString()+' ';
             }
             s += '\n';
         }
@@ -100,7 +110,7 @@ public class MapBlock {
 
     //储存当前地图块到文件
 
-    public void savd(File f){
+    public void save(File f){
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(f));
             bw.write(this.toString());
@@ -110,17 +120,30 @@ public class MapBlock {
             e.printStackTrace();
         }
     }
-    //从文件读取一个地图块
+
+    public void save(){
+        try {
+            File f = new File("Dat/MapDat/"+px+","+py+".map");
+            if (!f.exists()){
+                f.createNewFile();
+            }
+            save(f);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    //从文件构造一个地图块
     public MapBlock(File f){
         blocks = new GroundBlock[Height][Width];
         scenes = new ArrayList<>();
         try {
             BufferedReader br = new BufferedReader(new FileReader(f));
-            String[] scene = br.readLine().split(",");
+            String[] scene = br.readLine().split(" ");
             for (String K : scene){
                 Scenery scenery = new Scenery();
                 String mark = K.split(":")[0];
-                String[] p = K.split(":")[1].split(".");
+                String[] p = K.split(":")[1].split(",");
                 switch (mark){
                     case "Grass1" :
                         scenery = new Grass1(Double.valueOf(p[0]),Double.valueOf(p[1]));
@@ -134,16 +157,16 @@ public class MapBlock {
                 scenes.add(scenery);
             }
             for (int i = 0; i < Height; i++){
-                String[] block = br.readLine().split(",");
+                String[] block = br.readLine().split(" ");
                 GroundBlock gb = new GrassBlock(0,0);
                 for (int j = 0; j < Width; j++){
                     String[] t = block[j].split(":");
                     switch (t[0]){
                         case "GrassBlock":
-                            gb = new GrassBlock(Double.valueOf(t[1].split(".")[0]),Double.valueOf(t[1].split(".")[1]));
+                            gb = new GrassBlock(Double.valueOf(t[1].split(",")[0]),Double.valueOf(t[1].split(",")[1]));
                             break;
                         case "WaterBlock":
-                            gb = new WaterBlock(Double.valueOf(t[1].split(".")[0]),Double.valueOf(t[1].split(".")[1]));
+                            gb = new WaterBlock(Double.valueOf(t[1].split(",")[0]),Double.valueOf(t[1].split(",")[1]));
                             break;
                         default:
                             break;
