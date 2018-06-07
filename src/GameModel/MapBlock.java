@@ -2,8 +2,10 @@ package GameModel;
 
 
 
+import GameController.MainController;
 import javafx.scene.canvas.GraphicsContext;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -13,8 +15,8 @@ public class MapBlock {
     private boolean isActive; //标记当前区块是否活跃
     private final int Height = 80; //区块高度
     private final int Width = 80; //区块宽度
-    private double mHeight = blocks.length * Height;//区块像素高度
-    private double mWidth = blocks[0].length * Width;//区块像素宽度
+    private double mHeight = 32 * Height;//区块像素高度
+    private double mWidth = 32 * Width;//区块像素宽度
     private int px;//区块在世界的位置(x)
     private int py;//区块在世界的位置(y)
 
@@ -22,19 +24,13 @@ public class MapBlock {
         isActive = active;
     }
 
-    //按照输入构造区块
-    public MapBlock(ArrayList<Scenery> initScenes, GroundBlock[][] initBlocks, int initPx, int initPy){
-        scenes = initScenes;
-        blocks = initBlocks;
-        isActive = false;
-        px = initPx;
-        py = initPy;
-    }
-
     //根据种子随机生成区块
+
     public MapBlock(long seed){
         String nSeed = seed + "" + px + py;
         Random r = new Random(Long.decode(nSeed));
+        blocks = new GroundBlock[Height][Width];
+        scenes = new ArrayList<>();
         for (int i = 0; i < Height; i++){
             for (int j = 0; j < Width; j++){
                 blocks[i][j] = new GrassBlock(GrassBlock.Width()*j,GrassBlock.Height()*i);
@@ -57,16 +53,8 @@ public class MapBlock {
         }
         isActive = false;
     }
-
-//    public static void main(String[] args){
-//        Long seed = Long.valueOf(1);
-//        String nSeed = seed + "" + 2 + 1;
-//        Random r = new Random(Long.decode(nSeed));
-//        for (int i = 0; i < 1000; i++){
-//            System.out.println(r.nextInt());
-//        }
-//    }
     //重新toString方便存入文件
+
     public String toString(){
         String s = "";
 //        s += num + "\n";
@@ -82,8 +70,8 @@ public class MapBlock {
         }
         return s;
     }
-
     //在画布上绘制出当前区块
+
     public void draw(GraphicsContext gc, double fx, double fy){
         for (int i = 0; i < Height; i++){
             for (int j = 0; j < Width; j++){
@@ -94,11 +82,9 @@ public class MapBlock {
             k.draw(gc,fx,fy);
         }
     }
-
     public void setActive(boolean active) {
         isActive = active;
     }
-
     public boolean isActive() {
         return isActive;
     }
@@ -108,6 +94,66 @@ public class MapBlock {
             for (Item k : scenes){
                 k.updateItem();
             }
+        }
+    }
+
+
+    //储存当前地图块到文件
+
+    public void savd(File f){
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(f));
+            bw.write(this.toString());
+            bw.close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    //从文件读取一个地图块
+    public MapBlock(File f){
+        blocks = new GroundBlock[Height][Width];
+        scenes = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(f));
+            String[] scene = br.readLine().split(",");
+            for (String K : scene){
+                Scenery scenery = new Scenery();
+                String mark = K.split(":")[0];
+                String[] p = K.split(":")[1].split(".");
+                switch (mark){
+                    case "Grass1" :
+                        scenery = new Grass1(Double.valueOf(p[0]),Double.valueOf(p[1]));
+                        break;
+                    case "Grass2" :
+                        scenery = new Grass2(Double.valueOf(p[0]),Double.valueOf(p[1]));
+                        break;
+                    default:
+                        break;
+                }
+                scenes.add(scenery);
+            }
+            for (int i = 0; i < Height; i++){
+                String[] block = br.readLine().split(",");
+                GroundBlock gb = new GrassBlock(0,0);
+                for (int j = 0; j < Width; j++){
+                    String[] t = block[j].split(":");
+                    switch (t[0]){
+                        case "GrassBlock":
+                            gb = new GrassBlock(Double.valueOf(t[1].split(".")[0]),Double.valueOf(t[1].split(".")[1]));
+                            break;
+                        case "WaterBlock":
+                            gb = new WaterBlock(Double.valueOf(t[1].split(".")[0]),Double.valueOf(t[1].split(".")[1]));
+                            break;
+                        default:
+                            break;
+                    }
+                    blocks[i][j] = gb;
+                }
+            }
+            br.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

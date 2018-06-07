@@ -16,6 +16,12 @@ public class WaterBlock extends GroundBlock {
     public WaterBlock(){
     }
 
+//    @Override
+//    public String toString() {
+//        String s = "WaterBlock:"+getPx()+"."+getPx();
+//        return s;
+//    }
+
     public void makeRiver(GroundBlock[][] bigGround){
         int bigRow=bigGround[0].length;
         int bigCol=bigGround.length;

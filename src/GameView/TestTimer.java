@@ -3,6 +3,7 @@ package GameView;
 import GameController.GroundController;
 import GameController.MainController;
 import GameModel.Ground;
+import GameModel.MapBlock;
 import GameModel.Role;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -36,7 +37,16 @@ public class TestTimer extends Application {
         primaryStage.setTitle("TestTimer");//设置title
 //        scene.setCursor(new ImageCursor(new Image("/resource/草2.png")));
         primaryStage.setScene(scene);//添加场景到舞台
+        MainController.initImageLibrary();//初始化
+
+/**测试mapBlock
+        Long seed = Long.valueOf(1);
+        String nSeed = seed + "" + 2 + 1;
+        seed = Long.valueOf(nSeed);
         MainController.initImageLibrary();
+        MapBlock mpb = new MapBlock(seed);
+ */
+
         Image[] imageArrayM=new Image[4];
         for(int i=1;i<=4;i++){
             imageArrayM[i-1]=new Image("resource/Role1DOWN"+i+".png");
@@ -83,7 +93,7 @@ public class TestTimer extends Application {
                     }
                 }
         );
-        System.out.println(LastStep);
+//        System.out.println(LastStep);
         //新建时钟
         final long startNanoTime = System.nanoTime();
         new AnimationTimer(){

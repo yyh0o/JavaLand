@@ -19,7 +19,7 @@ public class MainController {
                 ImageLibray.addImage(value[0],new Image(value[1]));
                 line = in.readLine();
             }
-
+            in.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
