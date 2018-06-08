@@ -19,6 +19,14 @@ public class MapBlock {
     private int px;//区块在世界的位置(x)
     private int py;//区块在世界的位置(y)
 
+    public double getmHeight() {
+        return mHeight;
+    }
+
+    public double getmWidth() {
+        return mWidth;
+    }
+
     public int getPx() {
         return px;
     }

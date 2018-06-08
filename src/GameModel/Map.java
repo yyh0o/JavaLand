@@ -1,19 +1,27 @@
 package GameModel;
+
+import javafx.scene.image.Image;
+
+import java.io.File;
+
 public class Map {
     private MapBlock[] mapBlocks;
-    private int winHeight;//可见窗口大小(高)
-    private int WinWidth;//可见窗口大小(宽)
+    private double winHeight;//可见窗口大小(高)
+    private double WinWidth;//可见窗口大小(宽)
     private double wX;//可见窗口位置(x)
     private double wY;//可见窗口位置(y)
+    private double height;
+    private double width;
+    private Role player;
     private long seed;
 
-    public Map(MapBlock[] initMapBlocks, int initWinHeight, int initWinWidth, double initWX, double initWY){
-        mapBlocks = initMapBlocks;
-        winHeight = initWinHeight;
-        WinWidth = initWinWidth;
-        wX = initWX;
-        wY = initWY;
-    }
+//    public Map(MapBlock[] initMapBlocks, int initWinHeight, int initWinWidth, double initWX, double initWY){
+//        mapBlocks = initMapBlocks;
+//        winHeight = initWinHeight;
+//        WinWidth = initWinWidth;
+//        wX = initWX;
+//        wY = initWY;
+//    }
 
     public Map(long initSeed){
         seed = initSeed;
@@ -21,15 +29,34 @@ public class Map {
             mapBlocks[i] = new MapBlock(seed,i%3 -1,i/3 -1);
         }
         mapBlocks[4].setActive(true);
+        height = mapBlocks[0].getmHeight()*3;
+        width = mapBlocks[0].getmWidth()*3;
+        player = new Role(width/2,height/2);
+        wX = (width-WinWidth)/2;
+        wY = (height-winHeight)/2;
+
     }
 
+
+    /**
+     *move 实现当前地图在整个世界的移动
+     * @param toward 允许UP,DOWN,LEFT,RIGHT四个输入<br>
+     *               移动相应的方向
+     * @return 没有返回值
+     */
     public void move(String toward){
         mapBlocks[4].setActive(false);
         switch (toward){
             case "UP":
                 for (int i = 8; i >=0; i--){
                     if (i < 3){
-                        mapBlocks[i] = new MapBlock(seed,mapBlocks[i].getPx(),mapBlocks[i].getPy()+1);
+                        File f = new File(mapBlocks[i].getPx()+","+(mapBlocks[i].getPy()+1)+".map");
+                        if (f.exists()){
+                            mapBlocks[i] = new MapBlock(f);
+                        }
+                        else {
+                            mapBlocks[i] = new MapBlock(seed,mapBlocks[i].getPx(),mapBlocks[i].getPy()+1);
+                        }
                     }
                     else {
                         if (i > 5){
@@ -42,7 +69,12 @@ public class Map {
             case "DOWN":
                 for (int i = 0; i < 9; i++){
                     if (i > 5){
-                        mapBlocks[i] = new MapBlock(seed,mapBlocks[i].getPx(),mapBlocks[i].getPy()-1);
+                        File f = new File(mapBlocks[i].getPx()+","+(mapBlocks[i].getPy()-1)+".map");
+                        if (f.exists()){
+                            mapBlocks[i] = new MapBlock(f);
+                        }else {
+                            mapBlocks[i] = new MapBlock(seed,mapBlocks[i].getPx(),mapBlocks[i].getPy()-1);
+                        }
                     }
                     else {
                         if (i < 3){
@@ -55,7 +87,13 @@ public class Map {
             case "LEFT":
                 for (int i = 8; i >=0; i--){
                     if (i%3 == 0){
-                        mapBlocks[i] = new MapBlock(seed,mapBlocks[i].getPx()-1,mapBlocks[i].getPy());
+                        File f = new File((mapBlocks[i].getPx()-1)+","+mapBlocks[i].getPy()+".map");
+                        if (f.exists()){
+                            mapBlocks[i] = new MapBlock(f);
+                        }
+                        else {
+                            mapBlocks[i] = new MapBlock(seed,mapBlocks[i].getPx()-1,mapBlocks[i].getPy());
+                        }
                     }
                     else {
                         if (i%3 == 2){
@@ -69,7 +107,13 @@ public class Map {
             case "RIGHT":
                 for (int i = 0; i < 9; i++){
                     if (i%3 == 2){
-                        mapBlocks[i] = new MapBlock(seed,mapBlocks[i].getPx()+1,mapBlocks[i].getPy());
+                        File f = new File((mapBlocks[i].getPx()+1)+","+(mapBlocks[i].getPy())+".map");
+                        if (f.exists()){
+                            mapBlocks[i] = new MapBlock(f);
+                        }
+                        else {
+                            mapBlocks[i] = new MapBlock(seed,mapBlocks[i].getPx()+1,mapBlocks[i].getPy());
+                        }
                     }
                     else {
                         if (i%3 == 0){

@@ -40,6 +40,8 @@ public class TestTimer extends Application {
         primaryStage.setScene(scene);//添加场景到舞台
         MainController.initImageLibrary();//初始化
 
+
+
 //测试mapBlock
         Long seed = Long.valueOf(1);
         String nSeed = seed + "" + 2 + 1;
@@ -49,8 +51,9 @@ public class TestTimer extends Application {
         File f = new File("Dat/MapDat/"+mpb.getPx()+""+mpb.getPy()+".map");
         f.createNewFile();
         mpb.save(f);
-
         MapBlock mpb1 = new MapBlock(f);
+
+
 
         Image[] imageArrayM=new Image[4];
         for(int i=1;i<=4;i++){

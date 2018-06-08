@@ -34,6 +34,17 @@ public class Role extends Biological {
         frames=images;
     }
 
+    public Role(double x, double y){
+        super(x,y);
+        speed = 3;
+        Rtoward = "DOWN";
+        Image[] imageArrayM=new Image[4];
+        for(int i=1;i<=4;i++){
+            imageArrayM[i-1]=new Image("resource/Role1DOWN"+i+".png");
+        }
+        frames=imageArrayM;
+    }
+
     public void draw(GraphicsContext gc){
         gc.drawImage(image,getPx(),getPy());
     }
