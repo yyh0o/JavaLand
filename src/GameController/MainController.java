@@ -1,6 +1,8 @@
 package GameController;
 
 import GameModel.ImageLibray;
+import GameModel.Map;
+import GameModel.Role;
 import javafx.scene.image.Image;
 
 import java.io.BufferedReader;
@@ -8,7 +10,7 @@ import java.io.File;
 import java.io.FileReader;
 
 public class MainController {
-    public static void initImageLibrary(){
+    public void initImageLibrary(){
         File dat = new File("Dat/ImageLibrary.dat");
         try {
             BufferedReader in = new BufferedReader(new FileReader(dat));
@@ -24,5 +26,10 @@ public class MainController {
             e.printStackTrace();
         }
     }
+
+    public void initMap(Map map, Role player){
+        map.setPlayer(player);
+    }
+
 
 }

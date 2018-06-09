@@ -45,7 +45,7 @@ public class MapBlock {
         px = initx;
         py = inity;
         String nSeed = seed + "" + px + "" + py;
-        Random r = new Random(Long.decode(nSeed));
+        Random r = new Random(Long.valueOf(nSeed.hashCode()));
         blocks = new GroundBlock[Height][Width];
         scenes = new ArrayList<>();
         for (int i = 0; i < Height; i++){
@@ -100,9 +100,11 @@ public class MapBlock {
             k.draw(gc,fx,fy);
         }
     }
+
     public void setActive(boolean active) {
         isActive = active;
     }
+
     public boolean isActive() {
         return isActive;
     }
@@ -141,6 +143,7 @@ public class MapBlock {
             e.printStackTrace();
         }
     }
+
     //从文件构造一个地图块
     public MapBlock(File f){
         blocks = new GroundBlock[Height][Width];

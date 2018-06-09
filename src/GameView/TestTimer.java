@@ -38,7 +38,8 @@ public class TestTimer extends Application {
         primaryStage.setTitle("TestTimer");//设置title
 //        scene.setCursor(new ImageCursor(new Image("/resource/草2.png")));
         primaryStage.setScene(scene);//添加场景到舞台
-        MainController.initImageLibrary();//初始化
+        MainController mainController = new MainController();
+        mainController.initImageLibrary();//初始化
 
 
 
@@ -46,7 +47,7 @@ public class TestTimer extends Application {
         Long seed = Long.valueOf(1);
         String nSeed = seed + "" + 2 + 1;
         seed = Long.valueOf(nSeed);
-        MainController.initImageLibrary();
+        mainController.initImageLibrary();
         MapBlock mpb = new MapBlock(seed,0,0);
         File f = new File("Dat/MapDat/"+mpb.getPx()+""+mpb.getPy()+".map");
         f.createNewFile();
@@ -62,11 +63,22 @@ public class TestTimer extends Application {
         Ground ground = new Ground();//新建地
         gc.translate(-ground.getCol()*32,-ground.getRow()*32);
         Role testRole = new Role(gc.getCanvas().getWidth()/2 - gc.getTransform().getTx(),
-                gc.getCanvas().getHeight()/2 - gc.getTransform().getTy(),imageArrayM);//新建角色
+                gc.getCanvas().getHeight()/2 - gc.getTransform().getTy());//新建角色
 
 
 
         ArrayList<String> input = new ArrayList<String>();//新建储存KeyCode的链表
+
+        final Point2D[] mousePoint = {new Point2D(0, 0)};//记录坐标
+        scene.setOnMouseMoved(
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        Point2D t = new Point2D(event.getScreenX(),event.getScreenY());
+                        mousePoint[0] = t;
+                    }
+                }
+        );
 
         //添加键盘按键KeyCode到按键列表
         scene.setOnKeyPressed(
@@ -77,16 +89,6 @@ public class TestTimer extends Application {
 
                         if (!input.contains(code))
                             input.add(code);
-                    }
-                }
-        );
-        final Point2D[] mousePoint = {new Point2D(0, 0)};//记录坐标
-        scene.setOnMouseMoved(
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        Point2D t = new Point2D(event.getScreenX(),event.getScreenY());
-                        mousePoint[0] = t;
                     }
                 }
         );
@@ -112,39 +114,42 @@ public class TestTimer extends Application {
 //                testRole.move("DOWN");
 //                testRole.move("RIGHT");
                 //判断用户输入并且处理 之后会放在controller中
-                if (input.contains("UP") || input.contains("W")) {
-                    LastStep="UP";
-                    for(int i=1;i<=4;i++){
-                        imageArrayM[i-1]=new Image("resource/Role1UP"+i+".png");
-                    }
-                    testRole.move("UP",imageArrayM);
+                /*if (input.contains("UP") || input.contains("W")) {
+//                    LastStep="UP";
+//                    for(int i=1;i<=4;i++){
+//                        imageArrayM[i-1]=new Image("resource/Role1UP"+i+".png");
+//                    }
+//                    testRole.move("UP",imageArrayM);
+                    testRole.move("UP");
 
 
                 }
                 else if (input.contains("DOWN") || input.contains("S")) {
-                    LastStep="DOWN";
-                    for(int i=1;i<=4;i++){
-                        imageArrayM[i-1]=new Image("resource/Role1DOWN"+i+".png");
-                    }
-                    testRole.move("DOWN",imageArrayM);
-
+//                    LastStep="DOWN";
+//                    for(int i=1;i<=4;i++){
+//                        imageArrayM[i-1]=new Image("resource/Role1DOWN"+i+".png");
+//                    }
+//                    testRole.move("DOWN",imageArrayM);
+                    testRole.move("DOWN");
 
                 }
                 else if (input.contains("LEFT") || input.contains("A")){
-                    LastStep="LEFT";
-                    for(int i=1;i<=4;i++){
-                        imageArrayM[i-1]=new Image("resource/Role1LEFT"+i+".png");
-                    }
-                    testRole.move("LEFT",imageArrayM);
+//                    LastStep="LEFT";
+//                    for(int i=1;i<=4;i++){
+//                        imageArrayM[i-1]=new Image("resource/Role1LEFT"+i+".png");
+//                    }
+//                    testRole.move("LEFT",imageArrayM);
+                    testRole.move("LEFT");
 
 
                 }
                 else if (input.contains("RIGHT") || input.contains("D")){
-                    LastStep="RIGHT";
-                    for(int i=1;i<=4;i++){
-                        imageArrayM[i-1]=new Image("resource/Role1RIGHT"+i+".png");
-                    }
-                    testRole.move("RIGHT",imageArrayM);
+//                    LastStep="RIGHT";
+//                    for(int i=1;i<=4;i++){
+//                        imageArrayM[i-1]=new Image("resource/Role1RIGHT"+i+".png");
+//                    }
+//                    testRole.move("RIGHT",imageArrayM);
+                    testRole.move("RIGHT");
 
                 }
                 else{
@@ -152,7 +157,9 @@ public class TestTimer extends Application {
                         imageArrayM[i-1]=new Image("resource/Role1"+LastStep+1+".png");
                     }
                     testRole.frames=imageArrayM;
-                }
+                }*/
+
+                testRole.move(input);
 
 
 //                System.out.println(mousePoint[0]);

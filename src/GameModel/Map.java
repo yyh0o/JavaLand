@@ -1,8 +1,8 @@
 package GameModel;
 
-import javafx.scene.image.Image;
+import javafx.scene.canvas.GraphicsContext;
+import java.io.*;
 
-import java.io.File;
 
 public class Map {
     private MapBlock[] mapBlocks;
@@ -23,8 +23,13 @@ public class Map {
 //        wY = initWY;
 //    }
 
+    public void setPlayer(Role player){
+        this.player = player;
+    }
+
     public Map(long initSeed){
         seed = initSeed;
+        mapBlocks = new MapBlock[9];
         for (int i = 0; i < 9; i++){
             mapBlocks[i] = new MapBlock(seed,i%3 -1,i/3 -1);
         }
@@ -35,6 +40,34 @@ public class Map {
         wX = (width-WinWidth)/2;
         wY = (height-winHeight)/2;
 
+    }
+
+    public Map(){
+        try {
+            File f = new File("Dat/MapDat/map.seed");
+            if (f.exists()){
+                BufferedReader br = new BufferedReader(new FileReader(f));
+                seed = Long.valueOf(br.readLine());
+                br.close();
+            }
+            else {
+                seed = System.nanoTime();
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        mapBlocks = new MapBlock[9];
+        for (int i = 0; i < 9; i++){
+            mapBlocks[i] = new MapBlock(seed,i%3 -1,i/3 -1);
+        }
+        mapBlocks[4].setActive(true);
+        height = mapBlocks[0].getmHeight()*3;
+        width = mapBlocks[0].getmWidth()*3;
+        player = new Role(width/2,height/2);
+        wX = (width-WinWidth)/2;
+        wY = (height-winHeight)/2;
     }
 
 
@@ -126,4 +159,37 @@ public class Map {
         }
         mapBlocks[4].setActive(true);
     }
+
+    public void drawMap(GraphicsContext gc){
+        for (int i = 0; i < 9; i++){
+            mapBlocks[i].draw(gc,(i%3)*mapBlocks[i].getmWidth(),(i/3)*mapBlocks[i].getmHeight());
+        }
+    }
+
+    public void save(){
+        for (int i = 0; i < 9; i++){
+            mapBlocks[i].save();
+        }
+
+        player.save();
+
+        File f = new File("Dat/MapDat/map.seed");
+        if (!f.exists()){
+            try {
+                f.createNewFile();
+            }
+            catch (Exception e ){
+                e.printStackTrace();
+            }
+        }
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(f));
+            bw.write(String.valueOf(seed));
+            bw.close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 }
