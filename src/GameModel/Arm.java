@@ -1,2 +1,2 @@
-package GameModel;public class Arm extends Equipment {
+package GameModel;public abstract class Arm extends Equipment {
 }

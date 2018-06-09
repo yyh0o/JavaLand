@@ -1,4 +1,7 @@
 package GameModel;
+
+import javafx.scene.canvas.GraphicsContext;
+
 public abstract class GroundBlock extends Base {
 
     public static double Height() {
@@ -21,4 +24,6 @@ public abstract class GroundBlock extends Base {
         s += c + ":" + getPx()+","+getPy();
         return s;
     }
+
+    public abstract void draw(GraphicsContext gc, double fx, double fy);
 }

@@ -5,9 +5,8 @@ import javafx.scene.canvas.GraphicsContext;
 import java.util.Random;
 
 public class WaterBlock extends GroundBlock {
-    @Override
-    public void draw(GraphicsContext gc) {
-        gc.drawImage(ImageLibray.getImage("WaterBlock"),getPx(),getPy());
+    public void draw(GraphicsContext gc, double fx, double fy) {
+        gc.drawImage(ImageLibray.getImage("WaterBlock"),getPx() + fx,getPy() + fy);
     }
 
     public WaterBlock(double x, double y){

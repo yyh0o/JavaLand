@@ -1,10 +1,6 @@
 package GameModel;
 
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-
 public abstract class Base {
-    private static Image image;//对象图片
     private double px;//相对x坐标
     private double py;//相对y坐标
 
@@ -17,20 +13,9 @@ public abstract class Base {
     }
 
     //
-    public static Image getImage(){
-        return image;
-    }
 
-    public void setImage(Image image) {
-        this.image = image;
-    }
-
-    public void draw(GraphicsContext gc){
-        gc.drawImage(image,getPx(),getPy());
-    };
-    public void draw(GraphicsContext gc, double fx, double fy){
-        gc.drawImage(image,getPx()+fx,getPy()+fy);
-    }
+//    public abstract void draw(GraphicsContext gc);
+//    public abstract void draw(GraphicsContext gc, double fx, double fy);
 
     public Base(double initX, double initY){
         px = initX;
@@ -53,10 +38,4 @@ public abstract class Base {
         this.py = py;
     }
 
-    public boolean isCollisionWith(Base base){
-        if(getPx() + image.getWidth() > base.getPx() && getPx() < base.getPx() + image.getWidth() && getPy() + image.getHeight() > base.getPy() && getPy() < base.getPy() + image.getHeight()){
-            return true;
-        }
-        return false;
-    }
 }

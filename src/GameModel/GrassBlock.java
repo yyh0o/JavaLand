@@ -11,7 +11,12 @@ public class GrassBlock extends GroundBlock {
         super(x,y);
     }
 
-//    @Override
+    @Override
+    public void draw(GraphicsContext gc, double fx, double fy) {
+        gc.drawImage(ImageLibray.getImage("GrassBlock"),getPx()+fx,getPy()+fy);
+    }
+
+    //    @Override
 //    public String toString() {
 //        String s = "GrassBlock:"+getPx()+"."+getPx();
 //        return s;

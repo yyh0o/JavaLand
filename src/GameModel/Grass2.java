@@ -1,11 +1,14 @@
 package GameModel;
 
-import javafx.scene.image.Image;
+import javafx.scene.canvas.GraphicsContext;
 
 public class Grass2 extends Scenery{
     public Grass2(double x, double y){
-        setImage(new Image("resource/草2.png"));
         setPx(x);
         setPy(y);
+    }
+
+    public void draw(GraphicsContext gc,double fx, double fy){
+        gc.drawImage(ImageLibray.getImage("Grass2"),getPx()+fx,getPy()+fy);
     }
 }

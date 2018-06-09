@@ -26,7 +26,7 @@ public class MyGame extends Application {
         Canvas canvas = new Canvas(WIDTH,HEIGHT);//新建画布
         root.getChildren().add(canvas);//添加画布到场景
         GraphicsContext gc = canvas.getGraphicsContext2D();//获得画布的graphicContext
-        primaryStage.setTitle("TestTimer");//设置title
+        primaryStage.setTitle("Java Land");//设置title
         primaryStage.setScene(scene);//添加场景到舞台
         MainController mc = new MainController();//创建主控制器
         mc.initImageLibrary();//初始化ImageLibrary
@@ -34,7 +34,7 @@ public class MyGame extends Application {
         Map map = new Map();//创建地图
         mc.initMap(map,player);//初始化地图
         ArrayList<String> input = new ArrayList<String>();//新建储存KeyCode的链表
-        KeyboardManager kb = new KeyboardManager(scene, input);//新建键盘监听器
+        KeyboardManager km = new KeyboardManager(scene, input);//新建键盘监听器
 
 
 
@@ -42,9 +42,17 @@ public class MyGame extends Application {
             @Override
             public void handle(long now) {
                 double t = (now - startNanoTime) / 1000000000.0;
-
+                player.move(km.getInput());
+                map.drawMap(gc);
+//                map.move("UP");
+//                map.save();
             }
         }.start();
+
+
+        primaryStage.sizeToScene(); //设置舞台大小和场景一致
+        primaryStage.setResizable(false); //设置窗口不可缩放
+        primaryStage.show();
 
     }
 }

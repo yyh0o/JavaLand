@@ -31,7 +31,7 @@ public class Map {
         seed = initSeed;
         mapBlocks = new MapBlock[9];
         for (int i = 0; i < 9; i++){
-            mapBlocks[i] = new MapBlock(seed,i%3 -1,i/3 -1);
+            mapBlocks[i] = new MapBlock(seed,i%3,i/3);
         }
         mapBlocks[4].setActive(true);
         height = mapBlocks[0].getmHeight()*3;
@@ -161,9 +161,11 @@ public class Map {
     }
 
     public void drawMap(GraphicsContext gc){
+        gc.translate(-(width-WinWidth)/2,-(height-winHeight)/2);
         for (int i = 0; i < 9; i++){
             mapBlocks[i].draw(gc,(i%3)*mapBlocks[i].getmWidth(),(i/3)*mapBlocks[i].getmHeight());
         }
+        player.draw(gc);
     }
 
     public void save(){

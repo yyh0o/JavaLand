@@ -1,6 +1,5 @@
 package GameModel;
 
-import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -116,7 +115,7 @@ public class Role extends Biological {
     }
 
     public void draw(GraphicsContext gc){
-        gc.drawImage(image,getPx(),getPy());
+        gc.drawImage(new Image("resource/Role1DOWN1.png"),getPx(),getPy());
     }
 
     public Image getFrame(double time) {

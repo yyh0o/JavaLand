@@ -1,8 +1,6 @@
 package GameModel;
 import javafx.scene.canvas.GraphicsContext;
 
-import java.util.Random;
-
 public class Ground {
     final int smallRow = 22;
     final int smallCol = 30;
@@ -62,7 +60,7 @@ public class Ground {
     public void drawGroud(GraphicsContext gc){
         for (int i = -2; i < smallCol; i++){
             for (int j = -2; j < smallRow; j++){
-                bigGround[j+row][i+col].draw(gc);
+                bigGround[j+row][i+col].draw(gc,0,0);
             }
         }
 

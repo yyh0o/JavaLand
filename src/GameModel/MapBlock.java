@@ -40,7 +40,6 @@ public class MapBlock {
     }
 
     //根据种子随机生成区块
-
     public MapBlock(long seed,int initx, int inity){
         px = initx;
         py = inity;
@@ -71,8 +70,9 @@ public class MapBlock {
         }
         isActive = false;
     }
-    //重新toString方便存入文件
 
+
+    //重新toString方便存入文件
     public String toString(){
         String s = "";
 //        s += num + "\n";
@@ -88,8 +88,8 @@ public class MapBlock {
         }
         return s;
     }
-    //在画布上绘制出当前区块
 
+    //在画布上绘制出当前区块
     public void draw(GraphicsContext gc, double fx, double fy){
         for (int i = 0; i < Height; i++){
             for (int j = 0; j < Width; j++){
@@ -119,7 +119,6 @@ public class MapBlock {
 
 
     //储存当前地图块到文件
-
     public void save(File f){
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(f));
@@ -131,6 +130,7 @@ public class MapBlock {
         }
     }
 
+    //储存到哦已有的文件
     public void save(){
         try {
             File f = new File("Dat/MapDat/"+px+","+py+".map");
@@ -152,7 +152,7 @@ public class MapBlock {
             BufferedReader br = new BufferedReader(new FileReader(f));
             String[] scene = br.readLine().split(" ");
             for (String K : scene){
-                Scenery scenery = new Scenery();
+                Scenery scenery = null;// = new Scenery();
                 String mark = K.split(":")[0];
                 String[] p = K.split(":")[1].split(",");
                 switch (mark){
