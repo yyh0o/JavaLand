@@ -52,7 +52,7 @@ public class TestTimer extends Application {
         File f = new File("Dat/MapDat/"+mpb.getPx()+""+mpb.getPy()+".map");
         f.createNewFile();
         mpb.save(f);
-        MapBlock mpb1 = new MapBlock(f);
+//        MapBlock mpb1 = new MapBlock(f);
 
 
 

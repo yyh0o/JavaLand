@@ -43,7 +43,7 @@ public class MapBlock {
     public MapBlock(long seed,int initx, int inity){
         px = initx;
         py = inity;
-        File f = new File("Dat/MapDat/"+initx+","+inity);
+        File f = new File("Dat/MapDat/"+initx+","+inity+".map");
         if (f.exists()){
             blocks = new GroundBlock[Height][Width];
             scenes = new ArrayList<>();
@@ -193,49 +193,49 @@ public class MapBlock {
     }
 
     //从文件构造一个地图块
-    public MapBlock(File f){
-        blocks = new GroundBlock[Height][Width];
-        scenes = new ArrayList<>();
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(f));
-            String[] scene = br.readLine().split(" ");
-            for (String K : scene){
-                Scenery scenery = null;// = new Scenery();
-                String mark = K.split(":")[0];
-                String[] p = K.split(":")[1].split(",");
-                switch (mark){
-                    case "Grass1" :
-                        scenery = new Grass1(Double.valueOf(p[0]),Double.valueOf(p[1]));
-                        break;
-                    case "Grass2" :
-                        scenery = new Grass2(Double.valueOf(p[0]),Double.valueOf(p[1]));
-                        break;
-                    default:
-                        break;
-                }
-                scenes.add(scenery);
-            }
-            for (int i = 0; i < Height; i++){
-                String[] block = br.readLine().split(" ");
-                GroundBlock gb = new GrassBlock(0,0);
-                for (int j = 0; j < Width; j++){
-                    String[] t = block[j].split(":");
-                    switch (t[0]){
-                        case "GrassBlock":
-                            gb = new GrassBlock(Double.valueOf(t[1].split(",")[0]),Double.valueOf(t[1].split(",")[1]));
-                            break;
-                        case "WaterBlock":
-                            gb = new WaterBlock(Double.valueOf(t[1].split(",")[0]),Double.valueOf(t[1].split(",")[1]));
-                            break;
-                        default:
-                            break;
-                    }
-                    blocks[i][j] = gb;
-                }
-            }
-            br.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public MapBlock(File f){
+//        blocks = new GroundBlock[Height][Width];
+//        scenes = new ArrayList<>();
+//        try {
+//            BufferedReader br = new BufferedReader(new FileReader(f));
+//            String[] scene = br.readLine().split(" ");
+//            for (String K : scene){
+//                Scenery scenery = null;// = new Scenery();
+//                String mark = K.split(":")[0];
+//                String[] p = K.split(":")[1].split(",");
+//                switch (mark){
+//                    case "Grass1" :
+//                        scenery = new Grass1(Double.valueOf(p[0]),Double.valueOf(p[1]));
+//                        break;
+//                    case "Grass2" :
+//                        scenery = new Grass2(Double.valueOf(p[0]),Double.valueOf(p[1]));
+//                        break;
+//                    default:
+//                        break;
+//                }
+//                scenes.add(scenery);
+//            }
+//            for (int i = 0; i < Height; i++){
+//                String[] block = br.readLine().split(" ");
+//                GroundBlock gb = new GrassBlock(0,0);
+//                for (int j = 0; j < Width; j++){
+//                    String[] t = block[j].split(":");
+//                    switch (t[0]){
+//                        case "GrassBlock":
+//                            gb = new GrassBlock(Double.valueOf(t[1].split(",")[0]),Double.valueOf(t[1].split(",")[1]));
+//                            break;
+//                        case "WaterBlock":
+//                            gb = new WaterBlock(Double.valueOf(t[1].split(",")[0]),Double.valueOf(t[1].split(",")[1]));
+//                            break;
+//                        default:
+//                            break;
+//                    }
+//                    blocks[i][j] = gb;
+//                }
+//            }
+//            br.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

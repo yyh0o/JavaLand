@@ -97,10 +97,10 @@ public class Map {
     public void move(String toward){
         mapBlocks[4].setActive(false);
         switch (toward){
-            case "DOWN":
+            case "UP":
                 for (int i = 8; i >=0; i--){
                     if (i < 3){
-                        mapBlocks[i] = new MapBlock(seed,mapBlocks[i].getPx(),mapBlocks[i].getPy()+1);
+                        mapBlocks[i] = new MapBlock(seed,mapBlocks[i].getPx(),mapBlocks[i].getPy()-1);
                     }
                     else {
                         if (i > 5){
@@ -110,10 +110,10 @@ public class Map {
                     }
                 }
                 break;
-            case "UP":
+            case "DOWN":
                 for (int i = 0; i < 9; i++){
                     if (i > 5){
-                        mapBlocks[i] = new MapBlock(seed,mapBlocks[i].getPx(),mapBlocks[i].getPy()-1);
+                        mapBlocks[i] = new MapBlock(seed,mapBlocks[i].getPx(),mapBlocks[i].getPy()+1);
                     }
                     else {
                         if (i < 3){
@@ -137,7 +137,7 @@ public class Map {
 
                 }
                 break;
-            case "RIGHT ":
+            case "RIGHT":
                 for (int i = 0; i < 9; i++){
                     if (i%3 == 2){
                         mapBlocks[i] = new MapBlock(seed,mapBlocks[i].getPx()+1,mapBlocks[i].getPy());
@@ -240,10 +240,12 @@ public class Map {
     }
 
     public void mapMove(String toward, GraphicsContext gc){
-        System.out.println("px: "+player.getPx());
-        System.out.println("py: "+player.getPy());
-        System.out.println("wx: "+wX);
-        System.out.println("wy: "+wY);
+//        System.out.println("before");
+//        for (int i = 0; i < 9; i++){
+//            System.out.print(mapBlocks[i].getPx()+","+mapBlocks[i].getPy()+" \t");
+//            if (i%3==2)
+//                System.out.println();
+//        }
         switch (toward) {
             case "UP":
                 gc.translate(0,-height/3);
@@ -269,6 +271,12 @@ public class Map {
                 break;
         }
         move(toward);
+//        System.out.println("after");
+//        for (int i = 0; i < 9; i++){
+//            System.out.print(mapBlocks[i].getPx()+","+mapBlocks[i].getPy()+" \t");
+//            if (i%3==2)
+//                System.out.println();
+//        }
     }
 }
 /*
