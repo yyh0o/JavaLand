@@ -79,14 +79,6 @@ public class Map {
         wY = (height-winHeight)/2;
     }
 
-
-    public static void main(String[] args){
-        Map map = new Map();
-        while (true){
-            map.move("LEFT");
-        }
-    }
-
     /**
      *move 实现当前地图在整个世界的移动
      * @param toward 允许UP,DOWN,LEFT,RIGHT四个输入<br>
@@ -279,9 +271,3 @@ public class Map {
 //        }
     }
 }
-/*
-py: 3191.0 wy: 2631.0
-py: 3950.0 wy: 3390.0
-py: 4295.0 wy: 3735.0
-
-*/
