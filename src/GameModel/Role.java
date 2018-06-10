@@ -96,7 +96,7 @@ public class Role extends Biological {
         catch (Exception e){
             e.printStackTrace();
         }
-        speed = 3;
+        speed = 30;
         Rtoward = "DOWN";
         frames=new Image[4];
         for(int i=1;i<=4;i++){
@@ -106,7 +106,7 @@ public class Role extends Biological {
 
     public Role(double x, double y){
         super(x,y);
-        speed = 3;
+        speed = 30;
         Rtoward = "DOWN";
         frames=new Image[4];
         for(int i=1;i<=4;i++){
@@ -114,8 +114,8 @@ public class Role extends Biological {
         }
     }
 
-    public void draw(GraphicsContext gc){
-        gc.drawImage(new Image("resource/Role1DOWN1.png"),getPx(),getPy());
+    public void draw(GraphicsContext gc, double time){
+        gc.drawImage(getFrame(time),getPx(),getPy());
     }
 
     public Image getFrame(double time) {

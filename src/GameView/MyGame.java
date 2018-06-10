@@ -33,6 +33,7 @@ public class MyGame extends Application {
         Role player = new Role();//创建角色
         Map map = new Map();//创建地图
         mc.initMap(map,player);//初始化地图
+        mc.initGC(gc,map);//初始化graphicContext
         ArrayList<String> input = new ArrayList<String>();//新建储存KeyCode的链表
         KeyboardManager km = new KeyboardManager(scene, input);//新建键盘监听器
 
@@ -43,7 +44,11 @@ public class MyGame extends Application {
             public void handle(long now) {
                 double t = (now - startNanoTime) / 1000000000.0;
                 player.move(km.getInput());
-                map.drawMap(gc);
+                map.drawMap(gc,t);
+                mc.updateMap(map,gc);
+//                map.mapMove("DOWN",gc);
+
+//                mc.updateMap(map,gc);
 //                map.move("UP");
 //                map.save();
             }

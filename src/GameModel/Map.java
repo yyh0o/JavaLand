@@ -27,6 +27,14 @@ public class Map {
         this.player = player;
     }
 
+    public double getHeight() {
+        return height;
+    }
+
+    public double getWidth() {
+        return width;
+    }
+
     public Map(long initSeed){
         seed = initSeed;
         mapBlocks = new MapBlock[9];
@@ -65,11 +73,19 @@ public class Map {
         mapBlocks[4].setActive(true);
         height = mapBlocks[0].getmHeight()*3;
         width = mapBlocks[0].getmWidth()*3;
-        player = new Role(width/2,height/2);
+        winHeight = 640;
+        WinWidth = 860;
         wX = (width-WinWidth)/2;
         wY = (height-winHeight)/2;
     }
 
+
+    public static void main(String[] args){
+        Map map = new Map();
+        while (true){
+            map.move("LEFT");
+        }
+    }
 
     /**
      *move 实现当前地图在整个世界的移动
@@ -77,19 +93,14 @@ public class Map {
      *               移动相应的方向
      * @return 没有返回值
      */
+
     public void move(String toward){
         mapBlocks[4].setActive(false);
         switch (toward){
-            case "UP":
+            case "DOWN":
                 for (int i = 8; i >=0; i--){
                     if (i < 3){
-                        File f = new File(mapBlocks[i].getPx()+","+(mapBlocks[i].getPy()+1)+".map");
-                        if (f.exists()){
-                            mapBlocks[i] = new MapBlock(f);
-                        }
-                        else {
-                            mapBlocks[i] = new MapBlock(seed,mapBlocks[i].getPx(),mapBlocks[i].getPy()+1);
-                        }
+                        mapBlocks[i] = new MapBlock(seed,mapBlocks[i].getPx(),mapBlocks[i].getPy()+1);
                     }
                     else {
                         if (i > 5){
@@ -99,15 +110,10 @@ public class Map {
                     }
                 }
                 break;
-            case "DOWN":
+            case "UP":
                 for (int i = 0; i < 9; i++){
                     if (i > 5){
-                        File f = new File(mapBlocks[i].getPx()+","+(mapBlocks[i].getPy()-1)+".map");
-                        if (f.exists()){
-                            mapBlocks[i] = new MapBlock(f);
-                        }else {
-                            mapBlocks[i] = new MapBlock(seed,mapBlocks[i].getPx(),mapBlocks[i].getPy()-1);
-                        }
+                        mapBlocks[i] = new MapBlock(seed,mapBlocks[i].getPx(),mapBlocks[i].getPy()-1);
                     }
                     else {
                         if (i < 3){
@@ -120,13 +126,7 @@ public class Map {
             case "LEFT":
                 for (int i = 8; i >=0; i--){
                     if (i%3 == 0){
-                        File f = new File((mapBlocks[i].getPx()-1)+","+mapBlocks[i].getPy()+".map");
-                        if (f.exists()){
-                            mapBlocks[i] = new MapBlock(f);
-                        }
-                        else {
-                            mapBlocks[i] = new MapBlock(seed,mapBlocks[i].getPx()-1,mapBlocks[i].getPy());
-                        }
+                        mapBlocks[i] = new MapBlock(seed,mapBlocks[i].getPx()-1,mapBlocks[i].getPy());
                     }
                     else {
                         if (i%3 == 2){
@@ -137,16 +137,10 @@ public class Map {
 
                 }
                 break;
-            case "RIGHT":
+            case "RIGHT ":
                 for (int i = 0; i < 9; i++){
                     if (i%3 == 2){
-                        File f = new File((mapBlocks[i].getPx()+1)+","+(mapBlocks[i].getPy())+".map");
-                        if (f.exists()){
-                            mapBlocks[i] = new MapBlock(f);
-                        }
-                        else {
-                            mapBlocks[i] = new MapBlock(seed,mapBlocks[i].getPx()+1,mapBlocks[i].getPy());
-                        }
+                        mapBlocks[i] = new MapBlock(seed,mapBlocks[i].getPx()+1,mapBlocks[i].getPy());
                     }
                     else {
                         if (i%3 == 0){
@@ -156,16 +150,18 @@ public class Map {
                     }
                 }
                 break;
+            default:
+                break;
         }
         mapBlocks[4].setActive(true);
     }
 
-    public void drawMap(GraphicsContext gc){
-        gc.translate(-(width-WinWidth)/2,-(height-winHeight)/2);
+    public void drawMap(GraphicsContext gc, double time){
+
         for (int i = 0; i < 9; i++){
             mapBlocks[i].draw(gc,(i%3)*mapBlocks[i].getmWidth(),(i/3)*mapBlocks[i].getmHeight());
         }
-        player.draw(gc);
+        player.draw(gc,time);
     }
 
     public void save(){
@@ -194,4 +190,90 @@ public class Map {
         }
     }
 
+    public String getWinToward(){
+        String s = "";
+        if (-(wX-player.getPx()) < (1.0/8)*WinWidth)
+            s = "LEFT";
+        if (-(wX-player.getPx()) > (7.0/8)*WinWidth)
+            s = "RIGHT";
+        if (-(wY-player.getPy()) < (1.0/8)*winHeight)
+            s = "UP";
+        if (-(wY-player.getPy()) > (7.0/8)*winHeight)
+            s = "DOWN";
+        return s;
+    }
+
+    public void winMove(String toward, GraphicsContext gc){
+        switch (toward){
+            case "UP":
+                wY -= player.getSpeed();
+                gc.translate(0,player.getSpeed());
+                break;
+            case "DOWN":
+                wY += player.getSpeed();
+                gc.translate(0,-player.getSpeed());
+                break;
+            case "LEFT":
+                wX -= player.getSpeed();
+                gc.translate(player.getSpeed(),0);
+                break;
+            case "RIGHT":
+                wX += player.getSpeed();
+                gc.translate(-player.getSpeed(),0);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public String getMapToward(){
+        String s = "";
+        if (wX < width/3)
+            s = "LEFT";
+        if (wX > width*2/3)
+            s = "RIGHT";
+        if (wY < height/3)
+            s = "UP";
+        if (wY > width*2/3)
+            s = "DOWN";
+        return s;
+    }
+
+    public void mapMove(String toward, GraphicsContext gc){
+        System.out.println("px: "+player.getPx());
+        System.out.println("py: "+player.getPy());
+        System.out.println("wx: "+wX);
+        System.out.println("wy: "+wY);
+        switch (toward) {
+            case "UP":
+                gc.translate(0,-height/3);
+                wY += height/3;
+                player.setPy(player.getPy()+height/3);
+                break;
+            case "DOWN":
+                gc.translate(0,height/3);
+                wY -= height/3;
+                player.setPy(player.getPy()-height/3);
+                break;
+            case "LEFT":
+                gc.translate(-width/3,0);
+                wX += width/3;
+                player.setPx(player.getPx()+width/3);
+                break;
+            case "RIGHT":
+                gc.translate(width/3,0);
+                wX -= width/3;
+                player.setPx(player.getPx()-width/3);
+                break;
+            default:
+                break;
+        }
+        move(toward);
+    }
 }
+/*
+py: 3191.0 wy: 2631.0
+py: 3950.0 wy: 3390.0
+py: 4295.0 wy: 3735.0
+
+*/
