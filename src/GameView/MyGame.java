@@ -28,12 +28,13 @@ public class MyGame extends Application {
         GraphicsContext gc = canvas.getGraphicsContext2D();//获得画布的graphicContext
         primaryStage.setTitle("Java Land");//设置title
         primaryStage.setScene(scene);//添加场景到舞台
-        MainController mc = new MainController();//创建主控制器
-        mc.initImageLibrary();//初始化ImageLibrary
         Role player = new Role();//创建角色
         Map map = new Map();//创建地图
-        mc.initMap(map,player);//初始化地图
-        mc.initGC(gc,map);//初始化graphicContext
+        MainController mc = new MainController(gc,map,player,root);//创建主控制器
+        mc.initLabel();//初始化按钮布局
+        mc.initImageLibrary();//初始化ImageLibrary
+        mc.initMap();//初始化地图
+        mc.initGC();//初始化graphicContext
         ArrayList<String> input = new ArrayList<String>();//新建储存KeyCode的链表
         KeyboardManager km = new KeyboardManager(scene, input);//新建键盘监听器
 
@@ -45,12 +46,7 @@ public class MyGame extends Application {
                 double t = (now - startNanoTime) / 1000000000.0;
                 player.move(km.getInput());
                 map.drawMap(gc,t);
-                mc.updateMap(map,gc);
-//                map.mapMove("DOWN",gc);
-
-//                mc.updateMap(map,gc);
-//                map.move("UP");
-//                map.save();
+                mc.updateMap();
             }
         }.start();
 

@@ -82,14 +82,14 @@ public class Role extends Biological {
         File f = new File("Dat/player.info");
         try {
             if (!f.exists()){
-                setPx(32*40);
-                setPy(32*40);
+                setPx(3840);
+                setPy(3840);
             }
             else {
                 BufferedReader br = new BufferedReader(new FileReader(f));
                 String s = br.readLine();
                 setPx(Double.valueOf(s.split(",")[0]));
-                setPx(Double.valueOf(s.split(",")[1]));
+                setPy(Double.valueOf(s.split(",")[1]));
                 br.close();
             }
         }

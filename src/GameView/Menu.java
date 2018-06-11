@@ -76,8 +76,10 @@ public class Menu extends Application {
         });
         start3.setOnMouseClicked((MouseEvent e)->{
             try {
-                TestTimer testTimer = new TestTimer();
-                testTimer.start(new Stage());
+//                TestTimer testTimer = new TestTimer();
+//                testTimer.start(new Stage());
+                MyGame game = new MyGame();
+                game.start(new Stage());
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
