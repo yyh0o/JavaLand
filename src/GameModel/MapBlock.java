@@ -18,7 +18,7 @@ public class MapBlock {
     private double mWidth = 32 * Width;//区块像素宽度
     private int px;//区块在世界的位置(x)
     private int py;//区块在世界的位置(y)
-    //这一个要看是否有水块产生，若果没有就先调用再生成。
+    //这一个要看是否有水块产生，若果没有就先调用再生成，
     //River river=new River(System.nanoTime());
 
 
