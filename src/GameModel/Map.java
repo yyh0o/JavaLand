@@ -1,5 +1,6 @@
 package GameModel;
 
+import com.sun.org.apache.bcel.internal.generic.DDIV;
 import javafx.scene.canvas.GraphicsContext;
 import java.io.*;
 
@@ -27,12 +28,28 @@ public class Map {
         this.player = player;
     }
 
-    public double getHeight() {
-        return height;
+//    public double getHeight() {
+//        return height;
+//    }
+//
+//    public double getWidth() {
+//        return width;
+//    }
+//
+//    public double getWinHeight() {
+//        return winHeight;
+//    }
+//
+//    public double getWinWidth() {
+//        return WinWidth;
+//    }
+
+    public double getwX() {
+        return wX;
     }
 
-    public double getWidth() {
-        return width;
+    public double getwY() {
+        return wY;
     }
 
     public Map(long initSeed){
@@ -51,11 +68,18 @@ public class Map {
     }
 
     public Map(){
+        Double tx = null;
+        Double ty = null;
+        String actBlock = null;
         try {
             File f = new File("Dat/MapDat/map.seed");
             if (f.exists()){
                 BufferedReader br = new BufferedReader(new FileReader(f));
                 seed = Long.valueOf(br.readLine());
+                String s = br.readLine();
+                actBlock = br.readLine();
+                tx = Double.valueOf(s.split(",")[0]);
+                ty = Double.valueOf(s.split(",")[1]);
                 br.close();
             }
             else {
@@ -65,18 +89,30 @@ public class Map {
         catch (Exception e){
             e.printStackTrace();
         }
-
+        int px = 0;
+        int py = 0;
+        if (actBlock != null){
+            px = Integer.parseInt(actBlock.split(",")[0]);
+            py = Integer.parseInt(actBlock.split(",")[1]);
+        }
         mapBlocks = new MapBlock[9];
         for (int i = 0; i < 9; i++){
-            mapBlocks[i] = new MapBlock(seed,i%3 -1,i/3 -1);
+            mapBlocks[i] = new MapBlock(seed,i%3 -1 + px,i/3 -1 + py);
         }
         mapBlocks[4].setActive(true);
         height = mapBlocks[0].getmHeight()*3;
         width = mapBlocks[0].getmWidth()*3;
         winHeight = 640;
         WinWidth = 860;
-        wX = (width-WinWidth)/2;
-        wY = (height-winHeight)/2;
+        if (tx != null && ty != null){
+            wX = tx;
+            wY = ty;
+        }
+        else {
+            wX = (width-WinWidth)/2;
+            wY = (height-winHeight)/2;
+        }
+
     }
 
     /**
@@ -174,7 +210,9 @@ public class Map {
         }
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(f));
-            bw.write(String.valueOf(seed));
+            bw.write(String.valueOf(seed)+'\n');
+            bw.write(wX+","+wY+'\n');
+            bw.write(mapBlocks[4].getPx()+","+mapBlocks[4].getPy()+'\n');
             bw.close();
         }
         catch (Exception e){

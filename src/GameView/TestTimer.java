@@ -38,7 +38,7 @@ public class TestTimer extends Application {
         primaryStage.setTitle("TestTimer");//设置title
 //        scene.setCursor(new ImageCursor(new Image("/resource/草2.png")));
         primaryStage.setScene(scene);//添加场景到舞台
-        MainController mainController = new MainController();
+        MainController mainController = new MainController(null,null,null,null);
         mainController.initImageLibrary();//初始化
 
 

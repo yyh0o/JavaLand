@@ -54,6 +54,12 @@ public class Role extends Biological {
                 frames[i-1]=new Image("resource/Role1"+LastStep+1+".png");
             }
         }
+        if (input.contains("Q")){
+            super.speed = 100;
+        }
+        if (input.contains("E")){
+            super.speed = 3;
+        }
     }
 
     public void move(String toward){
@@ -82,14 +88,14 @@ public class Role extends Biological {
         File f = new File("Dat/player.info");
         try {
             if (!f.exists()){
-                setPx(32*40);
-                setPy(32*40);
+                setPx(3840);
+                setPy(3840);
             }
             else {
                 BufferedReader br = new BufferedReader(new FileReader(f));
                 String s = br.readLine();
                 setPx(Double.valueOf(s.split(",")[0]));
-                setPx(Double.valueOf(s.split(",")[1]));
+                setPy(Double.valueOf(s.split(",")[1]));
                 br.close();
             }
         }
