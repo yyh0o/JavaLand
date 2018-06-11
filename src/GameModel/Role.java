@@ -54,6 +54,12 @@ public class Role extends Biological {
                 frames[i-1]=new Image("resource/Role1"+LastStep+1+".png");
             }
         }
+        if (input.contains("Q")){
+            super.speed = 100;
+        }
+        if (input.contains("E")){
+            super.speed = 3;
+        }
     }
 
     public void move(String toward){
