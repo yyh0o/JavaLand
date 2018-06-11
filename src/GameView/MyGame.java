@@ -3,6 +3,7 @@ package GameView;
 import GameController.KeyboardManager;
 import GameController.MainController;
 import GameModel.Map;
+import GameModel.River;
 import GameModel.Role;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;

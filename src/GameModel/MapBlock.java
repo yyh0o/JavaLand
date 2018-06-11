@@ -18,6 +18,9 @@ public class MapBlock {
     private double mWidth = 32 * Width;//区块像素宽度
     private int px;//区块在世界的位置(x)
     private int py;//区块在世界的位置(y)
+    //River river=new River(System.nanoTime());
+
+
 
     public double getmHeight() {
         return mHeight;
@@ -44,6 +47,7 @@ public class MapBlock {
         px = initx;
         py = inity;
         File f = new File("Dat/MapDat/"+initx+","+inity+".map");
+        File f2=new File("Dat/MapDat/Water/"+initx+","+inity+".water");
         if (f.exists()){
             blocks = new GroundBlock[Height][Width];
             scenes = new ArrayList<>();
@@ -66,22 +70,45 @@ public class MapBlock {
                     }
                     scenes.add(scenery);
                 }
-                for (int i = 0; i < Height; i++){
-                    String[] block = br.readLine().split(" ");
-                    GroundBlock gb = new GrassBlock(0,0);
-                    for (int j = 0; j < Width; j++){
-                        String[] t = block[j].split(":");
-                        switch (t[0]){
-                            case "GrassBlock":
-                                gb = new GrassBlock(Double.valueOf(t[1].split(",")[0]),Double.valueOf(t[1].split(",")[1]));
-                                break;
-                            case "WaterBlock":
-                                gb = new WaterBlock(Double.valueOf(t[1].split(",")[0]),Double.valueOf(t[1].split(",")[1]));
-                                break;
-                            default:
-                                break;
+                if(!f2.exists()) {
+                    for (int i = 0; i < Height; i++) {
+                        String[] block = br.readLine().split(" ");
+                        GroundBlock gb = new GrassBlock(0, 0);
+                        for (int j = 0; j < Width; j++) {
+                            String[] t = block[j].split(":");
+                            switch (t[0]) {
+                                case "GrassBlock":
+                                    gb = new GrassBlock(Double.valueOf(t[1].split(",")[0]), Double.valueOf(t[1].split(",")[1]));
+                                    break;
+                                case "WaterBlock":
+                                    gb = new WaterBlock(Double.valueOf(t[1].split(",")[0]), Double.valueOf(t[1].split(",")[1]));
+                                    break;
+                                default:
+                                    break;
+                            }
+                            blocks[i][j] = gb;
                         }
-                        blocks[i][j] = gb;
+                    }
+                }
+                if(f2.exists()) {
+                    br = new BufferedReader(new FileReader(f2));
+                    String[] H = br.readLine().split(":");
+                    GroundBlock gb = new GrassBlock(0,0);
+                    for(int i=0;i<Height;i++) {
+                        String[] W=H[i].split(" ");
+                        for(int j=0;j<Width;j++){
+                           switch(W[j]){
+                               case "1":
+                                   gb=new WaterBlock(GrassBlock.Width()*j,GrassBlock.Height()*i);
+                                   break;
+                               case "0":
+                                   gb=new GrassBlock(GrassBlock.Width()*j,GrassBlock.Height()*i);
+                                   break;
+                               default:
+                                       break;
+                           }
+                            blocks[i][j]=gb;
+                        }
                     }
                 }
                 br.close();

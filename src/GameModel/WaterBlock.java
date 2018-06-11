@@ -24,9 +24,22 @@ public class WaterBlock extends GroundBlock {
     public void makeRiver(GroundBlock[][] bigGround){
         int bigRow=bigGround[0].length;
         int bigCol=bigGround.length;
+        int startWaterX;
+        int startWaterY;
+        String[] Direction={"RIGHT","DOWN","LEFT","UP"};
+        String firstDirection;
         final long startNanoTime=System.nanoTime();
         Random random=new Random(startNanoTime);
         System.out.println(random.toString());
+        startWaterX=random.nextInt()%900;
+        startWaterY=random.nextInt()%900;
+        if(startWaterY<bigCol/2) {
+            firstDirection = "RIGHT";
+        }
+        else if(startWaterY>=bigCol/2){
+            firstDirection="LEFT";
+        }
+       // while(startWaterX<0||startWaterX>899||)
         for(int k=0;k<bigCol;k++){
             for(int l=bigRow-1;l>0;l--){
                 if((k+l)>=199&&(k+l)<=201){
@@ -45,29 +58,5 @@ public class WaterBlock extends GroundBlock {
                    }
             }
         }
-        /*for(int i=Math.min(a,c);i<=Math.max(a,c);i++){
-            for(int j=Math.max(b,d);j>=Math.min(b,d);j--){
-                if((i+j)==(a+b)||(i+j)==(c+d)){
-                    bigGround[i][j]=new WaterBlock(j*32,i*32);
-                }
-            }
-        }*/
-
-
-
-        /*for(int i=0;i<bigCol;i++){
-            for(int j=64;j<85;j++){
-                if((i+j)>(150)){
-                    bigGround[i][j] = new WaterBlock(j * 32, i * 32);
-                }
-            }
-        }*/
-        /*for(int i=c;i<bigRow;i++){
-            for(int j=0;j<d;j++){
-                if((i+j)==(c+d)) {
-                    bigGround[i][j] = new WaterBlock(j * 32, i * 32);
-                }
-            }
-        }*/
     }
 }

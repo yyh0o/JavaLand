@@ -96,7 +96,7 @@ public class Role extends Biological {
         catch (Exception e){
             e.printStackTrace();
         }
-        speed = 3;
+        speed = 30;
         Rtoward = "DOWN";
         frames=new Image[4];
         for(int i=1;i<=4;i++){
