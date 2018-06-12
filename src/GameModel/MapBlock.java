@@ -6,6 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 public class MapBlock {
@@ -19,9 +20,12 @@ public class MapBlock {
     private int px;//区块在世界的位置(x)
     private int py;//区块在世界的位置(y)
     //这一个要看是否有水块产生，若果没有就先调用再生成，
-    //River river=new River(System.nanoTime());
+//    River river=new River(System.nanoTime());
 
 
+    public ArrayList<Scenery> getScenes() {
+        return scenes;
+    }
 
     public double getmHeight() {
         return mHeight;
@@ -116,6 +120,27 @@ public class MapBlock {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            double ah = 32;
+            double aw = 32;
+            for (GroundBlock[] a : blocks){
+                for (GroundBlock b : a){
+                    if (b instanceof WaterBlock){
+                        double ax = b.getPx();
+                        double ay = b.getPy();
+                        Iterator<Scenery> iterator = scenes.iterator();
+                        while (iterator.hasNext()){
+                            Scenery k = iterator.next();
+                            double bx = k.getPx();
+                            double by = k.getPy();
+                            double bh = k.getWidth();
+                            double bw = k.getWidth();
+                            if (ax<bx+bw&& ax+aw>bx&& ay<by+bh&& ah+ay>by){
+                                iterator.remove();
+                            }
+                        }
+                    }
+                }
+            }
         }
         else {
             String nSeed = seed + "" + px + "" + py;
@@ -127,7 +152,7 @@ public class MapBlock {
                     blocks[i][j] = new GrassBlock(GrassBlock.Width()*j,GrassBlock.Height()*i);
                 }
             }
-            int slen = 20 + r.nextInt(40); //随机生成景物数量
+            int slen = 20 + r.nextInt(400); //随机生成景物数量
             for (int i = 0; i < slen; i++){
                 int x = r.nextInt(3);
                 switch (x){

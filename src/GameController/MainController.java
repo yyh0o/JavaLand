@@ -2,6 +2,7 @@ package GameController;
 
 import GameModel.ImageLibray;
 import GameModel.Map;
+import GameModel.River;
 import GameModel.Role;
 import GameView.Test;
 import javafx.scene.Group;
@@ -63,11 +64,13 @@ public class MainController {
 //        player.setPx(map.getWidth()/2);
 //        player.setPy(map.getHeight()/2);
         map.setPlayer(player);
+
     }
 
     public void updateMap(){
         map.winMove(map.getWinToward(),gc);
         map.mapMove(map.getMapToward(),gc);
+
     }
 
     public void initLabel(){

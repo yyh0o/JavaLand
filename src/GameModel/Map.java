@@ -3,6 +3,8 @@ package GameModel;
 import com.sun.org.apache.bcel.internal.generic.DDIV;
 import javafx.scene.canvas.GraphicsContext;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 
 public class Map {
@@ -307,5 +309,39 @@ public class Map {
 //            if (i%3==2)
 //                System.out.println();
 //        }
+    }
+
+    public void checkAttack(){
+        if (player.isAttack()){
+            double ax = player.getPx();
+            double ay = player.getPy();
+            double aw = player.getWidth();
+            double ah = player.getHeight();
+            ArrayList<Scenery> sceneries = mapBlocks[4].getScenes();
+//            for (Scenery k : sceneries){
+//                Scenery tk = k;
+//                double bx = k.getPx();
+//                double by = k.getPy();
+//                double bw = k.getWidth();
+//                double bh = k.getWidth();
+//                if (ax<bx+bw&& ax+aw>bx&& ay<by+bh&& ah+ay>by){
+//                    sceneries.remove(tk);
+//                }
+//            }
+            for (int i = 0; i < 9; i++){
+                Iterator<Scenery> iterator = mapBlocks[i].getScenes().iterator();
+                while (iterator.hasNext()){
+                    Scenery k = iterator.next();
+                    double bx = k.getPx()+(i%3)*width/3;
+                    double by = k.getPy()+(i/3)*height/3;
+                    double bw = k.getWidth();
+                    double bh = k.getWidth();
+                    if (ax<bx+bw&& ax+aw>bx&& ay<by+bh&& ah+ay>by){
+                        iterator.remove();
+                    }
+
+                }
+            }
+        }
     }
 }

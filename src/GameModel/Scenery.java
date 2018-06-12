@@ -7,4 +7,5 @@ public abstract class Scenery extends Item {
         s += c + ":" + getPx() + "," + getPy();
         return s;
     }
+    public abstract double getWidth();
 }

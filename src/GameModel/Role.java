@@ -13,6 +13,24 @@ public class Role extends Biological {
     public Image[] frames;
     public double duration=0.1;
     private String LastStep="DOWN";
+    private boolean attack = false;
+
+    public void setAttack(boolean attack){
+        this.attack = attack;
+    }
+
+    public double getWidth(){
+        return 40;
+    }
+
+    public double getHeight(){
+        return 51;
+    }
+
+    public boolean isAttack(){
+        return attack;
+    }
+
     public void move(ArrayList<String> input){
         if (input.contains("UP") || input.contains("W")) {
             LastStep="UP";

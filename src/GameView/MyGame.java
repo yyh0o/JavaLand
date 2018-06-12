@@ -45,6 +45,13 @@ public class MyGame extends Application {
             @Override
             public void handle(long now) {
                 double t = (now - startNanoTime) / 1000000000.0;
+                if (km.getInput().contains("SPACE")){
+                    player.setAttack(true);
+                }
+                else {
+                    player.setAttack(false);
+                }
+                map.checkAttack();
                 player.move(km.getInput());
                 map.drawMap(gc,t);
                 mc.updateMap();
